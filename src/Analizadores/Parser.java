@@ -8,7 +8,11 @@ package Analizadores;
 import java_cup.runtime.*;
 import java.util.LinkedList;
 import InterfasGrafica.FrameInicio;
-import Interprete.expresion.Datos;
+import Abstracto.Instruccion;
+import Simbolo.Tipo;
+import Simbolo.TipoDato;
+import Instrucciones.Print;
+import Expresiones.Nativo;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -108,7 +112,7 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
-    public static String resultado = "";
+    //public static String resultado = "";
     //Errores error;
     //Simbolos sim;
 
@@ -158,7 +162,7 @@ class CUP$Parser$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		LinkedList<Instruccion> start_val = (LinkedList<Instruccion>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		RESULT = start_val;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -169,11 +173,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 1: // inicio ::= lista_instrucciones 
             {
-              Object RESULT =null;
-		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int listaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object lista = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 FrameInicio.retorno.add(lista); 
+              LinkedList<Instruccion> RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		LinkedList<Instruccion> var = (LinkedList<Instruccion>)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = var; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("inicio",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -181,18 +185,14 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // lista_instrucciones ::= lista_instrucciones instruccion 
             {
-              Object RESULT =null;
-		int anteriorleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
-		int anteriorright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Object anterior = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		int nuevoleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int nuevoright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object nuevo = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 
-                LinkedList<Object> lista = (LinkedList<Object>) anterior;
-                lista.add(nuevo);
-                RESULT = lista;
-            
+              LinkedList<Instruccion> RESULT =null;
+		int var1left = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int var1right = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		LinkedList<Instruccion> var1 = (LinkedList<Instruccion>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		int var2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int var2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Instruccion var2 = (Instruccion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = var1; RESULT.add(var2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_instrucciones",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -200,15 +200,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // lista_instrucciones ::= instruccion 
             {
-              Object RESULT =null;
-		int generalleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int generalright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object general = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 
-                LinkedList<Object> lista = new LinkedList<>();
-                lista.add(general);
-                RESULT = lista;
-            
+              LinkedList<Instruccion> RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Instruccion var = (Instruccion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new LinkedList<>(); RESULT.add(var); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_instrucciones",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -216,11 +212,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 4: // instruccion ::= imprimir 
             {
-              Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = a; 
+              Instruccion RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Instruccion var = (Instruccion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = var; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -228,7 +224,7 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 5: // instruccion ::= error PUNTOYCOMA 
             {
-              Object RESULT =null;
+              Instruccion RESULT =null;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -237,11 +233,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // imprimir ::= PRINTLN PARENTESIS_A expresion PARENTESIS_C PUNTOYCOMA 
             {
-              Object RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
-		Object a = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		 RESULT = a; 
+              Instruccion RESULT =null;
+		int varleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
+		int varright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
+		Instruccion var = (Instruccion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
+		 RESULT = new Print(var, varleft, varright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("imprimir",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -249,11 +245,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 7: // expresion ::= NUMERODECIMAL 
             {
-              Object RESULT =null;
+              Instruccion RESULT =null;
 		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String val = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT =  new Datos(val,"DOUBLE","5","6"); 
+		 RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -261,11 +257,11 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 8: // expresion ::= ENTERO 
             {
-              Object RESULT =null;
+              Instruccion RESULT =null;
 		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String val = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new Datos(val,"INT","5","6"); 
+		 RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -273,7 +269,7 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 9: // expresion ::= ID 
             {
-              Object RESULT =null;
+              Instruccion RESULT =null;
 		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String val = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;

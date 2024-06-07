@@ -20,7 +20,8 @@ import java_cup.runtime.*;
 //Tokens token;
 //Errores error; 
 %} 
-
+//Esto es extra para estados:
+//%state CADENA//estados
 // ------> Expresiones Regulares, aqui debo de definir todas las expreciones 
 
 entero = [0-9]+

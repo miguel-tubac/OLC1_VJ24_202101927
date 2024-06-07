@@ -4,15 +4,22 @@ package Analizadores;
 import java_cup.runtime.*;
 import java.util.LinkedList;
 import InterfasGrafica.FrameInicio;
-import Interprete.expresion.Datos;
+import Abstracto.Instruccion;
+import Simbolo.Tipo;
+import Simbolo.TipoDato;
 
+//instrucciones
+import Instrucciones.Print;
+
+//expresiones
+import Expresiones.Nativo;
 
 //------> Codigo para el parser
 //------> Declaracion de variables, funciones y funciones de error
 
 parser code 
 {:
-    public static String resultado = "";
+    //public static String resultado = "";
     //Errores error;
     //Simbolos sim;
 
@@ -52,11 +59,10 @@ terminal PRINTLN;
 
 
 //------> Declaración de no terminales
-non terminal inicio;
-non terminal lista_instrucciones;
-non terminal expresion;
-non terminal instruccion;
-non terminal imprimir;
+non terminal LinkedList<Instruccion> inicio, lista_instrucciones;
+non terminal Instruccion expresion;
+non terminal Instruccion instruccion;
+non terminal Instruccion imprimir;
 
 
 //------> PRECEDENCIA
@@ -68,33 +74,23 @@ start with inicio;
 
 // ------------>  Producciones  <------------
 
-inicio ::=  lista_instrucciones:lista {: FrameInicio.retorno.add(lista); :}
+inicio ::=  lista_instrucciones:var {: RESULT = var; :}
 ;
 
 
-lista_instrucciones ::=   lista_instrucciones:anterior instruccion:nuevo 
-            {: 
-                LinkedList<Object> lista = (LinkedList<Object>) anterior;
-                lista.add(nuevo);
-                RESULT = lista;
-            :}
-    | instruccion:general     
-            {: 
-                LinkedList<Object> lista = new LinkedList<>();
-                lista.add(general);
-                RESULT = lista;
-            :}
+lista_instrucciones ::=   lista_instrucciones:var1 instruccion:var2   {: RESULT = var1; RESULT.add(var2); :}
+    | instruccion:var   {: RESULT = new LinkedList<>(); RESULT.add(var); :}
 ;
 
-instruccion ::= imprimir:a     {: RESULT = a; :} 
+instruccion ::= imprimir:var     {: RESULT = var; :} 
     | error PUNTOYCOMA
 ;
 
-imprimir ::= PRINTLN PARENTESIS_A expresion:a PARENTESIS_C PUNTOYCOMA {: RESULT = a; :} 
+imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESULT = new Print(var, varleft, varright); :} 
 ;
 
 
-expresion ::= NUMERODECIMAL:val                                  {: RESULT =  new Datos(val,"DOUBLE","5","6"); :}
-    | ENTERO:val                                                 {: RESULT = new Datos(val,"INT","5","6"); :}
+expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
+    | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}
     | ID:val                                                     {:  :}
 ;

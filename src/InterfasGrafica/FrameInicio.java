@@ -30,7 +30,10 @@ import org.jfree.chart.JFreeChart;
 
 
 // Importaciones de prueba:
-import Interprete.expresion.Datos;
+
+import Abstracto.Instruccion;
+import Simbolo.Arbol;
+import Simbolo.TablaSimbolos;
 
 //Fin de las importaciones de prueba
 
@@ -322,12 +325,31 @@ public class FrameInicio extends javax.swing.JFrame {
             
             //analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
             
-            analizar(texto); //------------------------------------------------------------------------------- Aqui 2
-            System.out.print(retorno);
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
-            String consola2 = "Hola";
-            jTextArea1.setText(consola2);
+            
+            try{
+                
+                var resultado2 = analizar(texto); //------------------------------------------------------------------------------- Aqui 2
+                
+                //System.out.println(resultado2);
+                
+                var ast = new Arbol((LinkedList<Instruccion>) resultado2);
+                var tabla = new TablaSimbolos();
+                tabla.setNombre("GLOBAL");
+                ast.setConsola("");
+                for (var a : ast.getInstrucciones()) {
+                    var res = a.interpretar(ast, tabla);
+                }
+                //System.out.println(ast.getConsola());
+                jTextArea1.setText(ast.getConsola());
+                
+            } catch(Exception e){
+                System.out.println("Algo salio mal");
+                System.out.println(e);
+            }
+            
+            //jTextArea1.setText(consola2);
         }
         
     }//GEN-LAST:event_jMenu2MenuSelected
@@ -475,16 +497,18 @@ public class FrameInicio extends javax.swing.JFrame {
     //Funcion analizar, la cual se encutra en el repo
         // Realizar Analisis
     //Esta funcion recibe un estring u la analiza 
-    public static void analizar (String entrada){
+    public static Object analizar (String entrada){
         try {
             Analizadores.Lexer lexer = new Analizadores.Lexer(new StringReader(entrada));//este es el analizaro lexico 
             Analizadores.Parser parser = new Analizadores.Parser(lexer);//lugo lo pasa al parser
-            parser.parse();//aqui ya lo traduce
+            var resultado = parser.parse();//aqui ya lo traduce
+            return resultado.value;
         } catch (Exception e) {//esta son esepciones por si hay errores
             System.out.println("Error fatal en compilación de entrada.");
             System.out.println(e);
             //Funciones.Instruccion.agregarError("Error fatal en compilación de entrada.");
             //Funciones.Instruccion.agregarError(e);
+            return null;
         } 
     } 
     

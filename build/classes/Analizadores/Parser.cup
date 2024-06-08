@@ -17,6 +17,8 @@ import Expresiones.Aritmeticas;
 import Expresiones.OperadoresAritmeticos;
 import Expresiones.Relacionales;
 import Expresiones.OperadoresRelacionales;
+import Expresiones.Logicos;
+import Expresiones.OperadoresLogicos;
                    
 //------> Codigo para el parser
 //------> Declaracion de variables, funciones y funciones de error
@@ -73,6 +75,10 @@ non terminal Instruccion imprimir;
 
 
 //------> PRECEDENCIA
+precedence left OR;
+precedence left AND;
+precedence left XOR;
+precedence right NOT;
 precedence left DOBLEIGUAL, DIFERENCIA, MENORIGUAL, MENOR, MAYOR, MAYORIGUAL;
 precedence left MAS;
 precedence left POR, DIV, MODULO;
@@ -122,4 +128,8 @@ expresion ::= NUMERODECIMAL:val                                  {: RESULT = new
     | expresion:a MENORIGUAL expresion:b                         {: RESULT = new Relacionales(a, b, OperadoresRelacionales.MENORIGUALQUE, aleft, aright); :}
     | expresion:a MAYOR expresion:b                              {: RESULT = new Relacionales(a, b, OperadoresRelacionales.MAYORQUE, aleft, aright); :}
     | expresion:a MAYORIGUAL expresion:b                         {: RESULT = new Relacionales(a, b, OperadoresRelacionales.MAYOROIGUALQUE, aleft, aright); :}
+    | expresion:a OR expresion:b                                 {: RESULT = new Logicos(a, b, OperadoresLogicos.OR, aleft, aright); :}
+    | expresion:a AND expresion:b                                {: RESULT = new Logicos(a, b, OperadoresLogicos.AND, aleft, aright); :}
+    | expresion:a XOR expresion:b                                {: RESULT = new Logicos(a, b, OperadoresLogicos.XOR, aleft, aright); :}
+    | NOT expresion:a                                            {: RESULT = new Logicos(a, a, OperadoresLogicos.NOT, aleft, aright); :}
 ;

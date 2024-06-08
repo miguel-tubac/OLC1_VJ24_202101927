@@ -29,25 +29,25 @@ public class Aritmeticas extends Instruccion {
     @Override
     public Object interpretar(Arbol arbol, TablaSimbolos tabla) {
         Object opIzq = null, opDer = null, Unico = null;
-        if (this.operandoUnico != null) {
+        if (this.operandoUnico != null) {//aca se compruba el metodo constructor se instancio para la negacion
             Unico = this.operandoUnico.interpretar(arbol, tabla);
             if (Unico instanceof Errores) {
                 return Unico;
             }
-        } else {
-            opIzq = this.operando1.interpretar(arbol, tabla);
+        } else {//esto es cuando se instancia objetos del metodo constructor que recive dos parametros de operacion
+            opIzq = this.operando1.interpretar(arbol, tabla);//aca se interpreta
             if (opIzq instanceof Errores) {
                 return opIzq;
             }
             opDer = this.operando2.interpretar(arbol, tabla);
-            if (opDer instanceof Errores) {
+            if (opDer instanceof Errores) {//Se comprueban si son de la clase errores
                 return opDer;
             }
         }
-
+        //si todo sale bien ingresa a esta parte
         return switch (operacion) {
             case SUMA ->
-                this.suma(opIzq, opDer);
+                this.suma(opIzq, opDer);//llama al metodo suma
             case NEGACION ->
                 this.negacion(Unico);
             default ->
@@ -55,30 +55,42 @@ public class Aritmeticas extends Instruccion {
         };
     }
 
+    //*************************************************Suma**************************************
     public Object suma(Object op1, Object op2) {
         var tipo1 = this.operando1.tipo.getTipo();
         var tipo2 = this.operando2.tipo.getTipo();
 
         switch (tipo1) {
+            //entero
             case TipoDato.ENTERO -> {
                 switch (tipo2) {
+                    //entero + entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
                         return (int) op1 + (int) op2;
                     }
+                    //entero + decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
                         return (int) op1 + (double) op2;
                     }
+                    //entero + cadena = cadena
+                    case TipoDato.CARACTER -> {
+                        this.tipo.setTipo(TipoDato.ENTERO);
+                        return (int) op1 +  (int)(op2.toString()).charAt(0);
+                    }
+                    //entero + cadena = cadena
                     case TipoDato.CADENA -> {
                         this.tipo.setTipo(TipoDato.CADENA);
                         return op1.toString() + op2.toString();
                     }
+                    //Error
                     default -> {
                         return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
                     }
                 }
             }
+            //decimal
             case TipoDato.DECIMAL -> {
                 switch (tipo2) {
                     case TipoDato.ENTERO -> {
@@ -109,6 +121,8 @@ public class Aritmeticas extends Instruccion {
         }
     }
 
+    
+    //*************************************************Negacion**************************************
     public Object negacion(Object op1) {
         var opU = this.operandoUnico.tipo.getTipo();
         switch (opU) {

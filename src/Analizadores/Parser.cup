@@ -72,6 +72,8 @@ non terminal Instruccion imprimir;
 
 //------> PRECEDENCIA
 precedence left COMA, PARENTESIS_A, CORCHETE_A, CORCHETE_C, PARENTESIS_C;
+precedence left MAS;
+precedence left MENOS;
 
 //------> Definir Simbolo Inicial
 start with inicio; 
@@ -97,7 +99,9 @@ imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESUL
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
     | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}
-    | ID:val                                                     {:  :}
+    | ID:val                                                     {: RESULT = new Nativo(val, new Tipo(TipoDato.ID), valleft, valright ); :}
     | CADENA: val                                                {: RESULT = new Nativo(val, new Tipo(TipoDato.CADENA), valleft, valright ); :}
     | CARACTER: val                                              {: RESULT = new Nativo(val, new Tipo(TipoDato.CARACTER), valleft, valright ); :}
+    | expresion:a MAS expresion:b                                {: RESULT = new Aritmeticas(a, b, OperadoresAritmeticos.SUMA, aleft, aright); :}
+    | MENOS expresion:a                                          {: RESULT = new Aritmeticas(a, OperadoresAritmeticos.NEGACION, aleft, aright); :} %prec MENOS
 ;

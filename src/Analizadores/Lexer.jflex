@@ -65,6 +65,8 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
 //------> Instrucciones
 <YYINITIAL> "println"       { return new Symbol(sym.PRINTLN, yycolumn, yyline, yytext());}
+<YYINITIAL> "true"       { return new Symbol(sym.TRUE, yycolumn, yyline, yytext());}
+<YYINITIAL> "false"       { return new Symbol(sym.FALSE, yycolumn, yyline, yytext());}
 
 //------> Operadores
 

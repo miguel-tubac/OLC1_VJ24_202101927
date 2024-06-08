@@ -8,43 +8,47 @@ package Analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int MENOS = 25;
-  public static final int AND = 21;
-  public static final int MENOR = 12;
-  public static final int DIFERENCIA = 17;
-  public static final int PUNTOYCOMA = 8;
-  public static final int CADENA = 30;
-  public static final int DOSPUNTOS = 5;
-  public static final int OR = 20;
-  public static final int MENORIGUAL = 18;
-  public static final int IGUAL = 9;
-  public static final int NOT = 23;
-  public static final int POTENCIA = 29;
-  public static final int MODULO = 28;
-  public static final int POR = 26;
-  public static final int ID = 4;
-  public static final int NUMERODECIMAL = 3;
-  public static final int CARACTER = 31;
-  public static final int COMA = 7;
-  public static final int MAYOR = 13;
+  public static final int MENOS = 27;
+  public static final int AND = 23;
+  public static final int MENOR = 14;
+  public static final int DIFERENCIA = 19;
+  public static final int PUNTOYCOMA = 10;
+  public static final int CADENA = 32;
+  public static final int DOSPUNTOS = 7;
+  public static final int OR = 22;
+  public static final int MENORIGUAL = 20;
+  public static final int IGUAL = 11;
+  public static final int NOT = 25;
+  public static final int POTENCIA = 31;
+  public static final int TRUE = 3;
+  public static final int MODULO = 30;
+  public static final int POR = 28;
+  public static final int ID = 6;
+  public static final int NUMERODECIMAL = 5;
+  public static final int CARACTER = 33;
+  public static final int COMA = 9;
+  public static final int MAYOR = 15;
   public static final int EOF = 0;
-  public static final int PRINTLN = 32;
-  public static final int DIV = 27;
-  public static final int MAYORIGUAL = 19;
-  public static final int PARENTESIS_C = 11;
+  public static final int PRINTLN = 34;
+  public static final int DIV = 29;
+  public static final int MAYORIGUAL = 21;
+  public static final int FALSE = 4;
+  public static final int PARENTESIS_C = 13;
   public static final int error = 1;
-  public static final int PARENTESIS_A = 10;
-  public static final int DOBLEIGUAL = 16;
-  public static final int XOR = 22;
+  public static final int PARENTESIS_A = 12;
+  public static final int DOBLEIGUAL = 18;
+  public static final int XOR = 24;
   public static final int ENTERO = 2;
-  public static final int CORCHETE_C = 15;
-  public static final int CORCHETE_A = 14;
-  public static final int DOBLEDOSPUNTOS = 6;
-  public static final int MAS = 24;
+  public static final int CORCHETE_C = 17;
+  public static final int CORCHETE_A = 16;
+  public static final int DOBLEDOSPUNTOS = 8;
+  public static final int MAS = 26;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "ENTERO",
+  "TRUE",
+  "FALSE",
   "NUMERODECIMAL",
   "ID",
   "DOSPUNTOS",

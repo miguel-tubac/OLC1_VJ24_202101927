@@ -3,7 +3,6 @@ package Analizadores;
 
 import java_cup.runtime.*;
 
-
 %%	
 //-------> Directivas (No tocar)
 
@@ -17,63 +16,98 @@ import java_cup.runtime.*;
 %ignorecase
 
 %{
-//Tokens token;
-//Errores error; 
+    //Tokens token;
+    //Errores error;
+    String cadena = "";
 %} 
-//Esto es extra para estados:
-//%state CADENA//estados
+
+%state CADENA
+%state CARACTER
 // ------> Expresiones Regulares, aqui debo de definir todas las expreciones 
 
 entero = [0-9]+
 numero_decimal = ([0-9]+\.[0-9]+)
-espacio = [ ]
-id = [a-zA-Z][a-zA-Z0-9_]*|[\"][^\n\"]*[\"]
-comentario_linea = "//".*
+id = [a-zA-Z][a-zA-Z0-9_]*
+comentario_linea = "//".*    
 comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
-
-caracter = ["\'"]([^"\'"])?["\'"]
-
 
 %%
 // ------------  Reglas Lexicas -------------------
 //Aqui se llaman a las expreciones regulares, se generan los tokens
 //luego de cada declarion debo de ir y declararla en Parser.cup en "Declaración de terminales"
 
-
 //------> Simbolos
-":"       { return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext());}
-"::"      { return new Symbol(sym.DOBLEDOSPUNTOS, yycolumn, yyline, yytext());}
-","       { return new Symbol(sym.COMA, yycolumn, yyline, yytext());}
-"("       { return new Symbol(sym.PARENTESIS_A, yycolumn, yyline, yytext());}
-")"       { return new Symbol(sym.PARENTESIS_C, yycolumn, yyline, yytext());}
-";"       { return new Symbol(sym.PUNTOYCOMA, yycolumn, yyline, yytext());}
-"="       { return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());}
-"<"       { return new Symbol(sym.MENOR, yycolumn, yyline, yytext());}
-">"       { return new Symbol(sym.MAYOR, yycolumn, yyline, yytext());}
-"["       { return new Symbol(sym.CORCHETE_A, yycolumn, yyline, yytext());}
-"]"       { return new Symbol(sym.CORCHETE_C, yycolumn, yyline, yytext());}
-"-"       { return new Symbol(sym.GUION, yycolumn, yyline, yytext());}
-//------> Instrucciones
-"println"       { return new Symbol(sym.PRINTLN, yycolumn, yyline, yytext());}
+<YYINITIAL> ":"       { return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext());}
+<YYINITIAL> "::"      { return new Symbol(sym.DOBLEDOSPUNTOS, yycolumn, yyline, yytext());}
+<YYINITIAL> ","       { return new Symbol(sym.COMA, yycolumn, yyline, yytext());}
+<YYINITIAL> "("       { return new Symbol(sym.PARENTESIS_A, yycolumn, yyline, yytext());}
+<YYINITIAL> ")"       { return new Symbol(sym.PARENTESIS_C, yycolumn, yyline, yytext());}
+<YYINITIAL> ";"       { return new Symbol(sym.PUNTOYCOMA, yycolumn, yyline, yytext());}
+<YYINITIAL> "="       { return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());}
+<YYINITIAL> "=="      { return new Symbol(sym.DOBLEIGUAL, yycolumn, yyline, yytext());}
+<YYINITIAL> "!="      { return new Symbol(sym.DIFERENCIA, yycolumn, yyline, yytext());}
+<YYINITIAL> "<"       { return new Symbol(sym.MENOR, yycolumn, yyline, yytext());}
+<YYINITIAL> "<="      { return new Symbol(sym.MENORIGUAL, yycolumn, yyline, yytext());}
+<YYINITIAL> ">"       { return new Symbol(sym.MAYOR, yycolumn, yyline, yytext());}
+<YYINITIAL> ">="      { return new Symbol(sym.MAYORIGUAL, yycolumn, yyline, yytext());}
+<YYINITIAL> "["       { return new Symbol(sym.CORCHETE_A, yycolumn, yyline, yytext());}
+<YYINITIAL> "]"       { return new Symbol(sym.CORCHETE_C, yycolumn, yyline, yytext());}
+<YYINITIAL> "-"       { return new Symbol(sym.MENOS, yycolumn, yyline, yytext());}
+<YYINITIAL> "+"       { return new Symbol(sym.MAS, yycolumn, yyline, yytext());}
+<YYINITIAL> "*"       { return new Symbol(sym.POR, yycolumn, yyline, yytext());}
+<YYINITIAL> "/"       { return new Symbol(sym.DIV, yycolumn, yyline, yytext());}
+<YYINITIAL> "**"      { return new Symbol(sym.POTENCIA, yycolumn, yyline, yytext());}
+<YYINITIAL> "%"       { return new Symbol(sym.MODULO, yycolumn, yyline, yytext());}
+<YYINITIAL> "||"      { return new Symbol(sym.OR, yycolumn, yyline, yytext());}
+<YYINITIAL> "&&"      { return new Symbol(sym.AND, yycolumn, yyline, yytext());}
+<YYINITIAL> "^"       { return new Symbol(sym.XOR, yycolumn, yyline, yytext());}
+<YYINITIAL> "!"       { return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
 
+//------> Instrucciones
+<YYINITIAL> "println"       { return new Symbol(sym.PRINTLN, yycolumn, yyline, yytext());}
 
 //------> Operadores
 
-
 //------> Expresiones
-{espacio}           {}
-{entero}            { return new Symbol(sym.ENTERO, yycolumn, yyline, yytext()); }
-{numero_decimal}    { return new Symbol(sym.NUMERODECIMAL, yycolumn, yyline, yytext()); }
-{id}                { return new Symbol(sym.ID, yycolumn, yyline, yytext()); }
-{comentario_linea}        {}
-{comentario_multiple}     {}
-{caracter}          { return new Symbol(sym.CHAR, yycolumn, yyline, yytext()); }
+<YYINITIAL> {entero}            { return new Symbol(sym.ENTERO, yycolumn, yyline, yytext()); }
+<YYINITIAL> {numero_decimal}    { return new Symbol(sym.NUMERODECIMAL, yycolumn, yyline, yytext()); }
+<YYINITIAL> {id}                { return new Symbol(sym.ID, yycolumn, yyline, yytext()); }
+<YYINITIAL> {comentario_linea}        {}
+<YYINITIAL> {comentario_multiple}     {}
+
+
+// -------> Manejo de cadenas de texto
+<YYINITIAL> \" { cadena = ""; yybegin(CADENA); }
+
+<CADENA> {
+    \" { String tmp = cadena; cadena = ""; yybegin(YYINITIAL); return new Symbol(sym.CADENA, yyline, yycolumn, tmp); }
+    \\\\ { cadena += "\\"; }
+    \\\" { cadena += "\""; }
+    \\\' { cadena += "\'"; }
+    \\n { cadena += "\n"; }
+    \\t { cadena += "\t"; }
+    \\r { cadena += "\r"; }
+    [^\"\\] { cadena += yytext(); }//aca es cuando se ignoran los otros casos, por lo tanto es el texto
+}
+
+<YYINITIAL> \' { cadena = ""; yybegin(CARACTER); }
+
+<CARACTER> {
+    \'      { String tmp = cadena; cadena = ""; yybegin(YYINITIAL); return new Symbol(sym.CARACTER, yyline, yycolumn, tmp); }
+    \\\\    { cadena = "\\"; }
+    \\\"    { cadena = "\""; }
+    \\\'    { cadena = "\'"; }
+    \\n     { cadena = "\n"; }
+    \\t     { cadena = "\t"; }
+    \\r     { cadena = "\r"; }
+    [^\'\\] { cadena = yytext(); }//aca es cuando se ignoran los otros casos, por lo tanto es el texto
+}
 
 
 //------> Ignorados 
-[ \t\r\n\f]     {/* Espacios en blanco se ignoran */}
+<YYINITIAL> [ \t\r\n\f]     {/* Espacios en blanco se ignoran */}
 
 //------> Errores Léxicos 
-.           	{  
+<YYINITIAL> .           	{  
                     System.out.println("Error Lexico: " + yytext() + " | Fila:" + yyline + " | Columna: " + yycolumn); 
                 }

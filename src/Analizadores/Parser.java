@@ -13,6 +13,8 @@ import Simbolo.Tipo;
 import Simbolo.TipoDato;
 import Instrucciones.Print;
 import Expresiones.Nativo;
+import Expresiones.Aritmeticas;
+import Expresiones.OperadoresAritmeticos;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -38,10 +40,10 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\012\000\002\002\004\000\002\002\003\000\002\003" +
+    "\000\014\000\002\002\004\000\002\002\003\000\002\003" +
     "\004\000\002\003\003\000\002\005\003\000\002\005\004" +
     "\000\002\006\007\000\002\004\003\000\002\004\003\000" +
-    "\002\004\003" });
+    "\002\004\003\000\002\004\003\000\002\004\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -49,17 +51,18 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\021\000\006\003\005\027\010\001\002\000\010\002" +
-    "\000\003\005\027\010\001\002\000\004\012\022\001\002" +
-    "\000\010\002\ufffe\003\ufffe\027\ufffe\001\002\000\004\002" +
-    "\021\001\002\000\004\014\012\001\002\000\010\002\ufffd" +
-    "\003\ufffd\027\ufffd\001\002\000\010\004\016\005\014\006" +
-    "\013\001\002\000\004\015\ufff8\001\002\000\004\015\ufffa" +
-    "\001\002\000\004\015\017\001\002\000\004\015\ufff9\001" +
-    "\002\000\004\012\020\001\002\000\010\002\ufffb\003\ufffb" +
-    "\027\ufffb\001\002\000\004\002\001\001\002\000\010\002" +
-    "\ufffc\003\ufffc\027\ufffc\001\002\000\010\002\uffff\003\uffff" +
-    "\027\uffff\001\002" });
+    "\000\023\000\006\003\005\042\010\001\002\000\010\002" +
+    "\000\003\005\042\010\001\002\000\004\012\024\001\002" +
+    "\000\010\002\ufffe\003\ufffe\042\ufffe\001\002\000\004\002" +
+    "\023\001\002\000\004\014\012\001\002\000\010\002\ufffd" +
+    "\003\ufffd\042\ufffd\001\002\000\014\004\020\005\015\006" +
+    "\013\040\017\041\014\001\002\000\004\015\ufff8\001\002" +
+    "\000\004\015\ufff6\001\002\000\004\015\ufffa\001\002\000" +
+    "\004\015\021\001\002\000\004\015\ufff7\001\002\000\004" +
+    "\015\ufff9\001\002\000\004\012\022\001\002\000\010\002" +
+    "\ufffb\003\ufffb\042\ufffb\001\002\000\004\002\001\001\002" +
+    "\000\010\002\ufffc\003\ufffc\042\ufffc\001\002\000\010\002" +
+    "\uffff\003\uffff\042\uffff\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -67,13 +70,14 @@ public class Parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\021\000\012\002\006\003\003\005\005\006\010\001" +
-    "\001\000\006\005\022\006\010\001\001\000\002\001\001" +
+    "\000\023\000\012\002\006\003\003\005\005\006\010\001" +
+    "\001\000\006\005\024\006\010\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\004\014\001\001\000\002\001\001" +
+    "\002\001\001\000\004\004\015\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001" });
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -274,6 +278,30 @@ class CUP$Parser$actions {
 		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String val = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		  
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // expresion ::= CADENA 
+            {
+              Instruccion RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new Nativo(val, new Tipo(TipoDato.CADENA), valleft, valright ); 
+              CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
+            }
+          return CUP$Parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // expresion ::= CARACTER 
+            {
+              Instruccion RESULT =null;
+		int valleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
+		int valright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
+		Object val = (Object)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		 RESULT = new Nativo(val, new Tipo(TipoDato.CARACTER), valleft, valright ); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",2, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

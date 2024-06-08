@@ -323,14 +323,15 @@ public class FrameInicio extends javax.swing.JFrame {
             //Comente la llamada a la funcion ya que solo se debe de ejecutar una ves, para que genere los archivos .java en 
             //el paquete analizador
             
-            //analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
+            analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
             
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
             
+              /* //------------------------------------------------------------------------------- Aqui 2
             try{
-                
-                var resultado2 = analizar(texto); //------------------------------------------------------------------------------- Aqui 2
+                //System.out.println(texto);
+                var resultado2 = analizar(texto); 
                 
                 //System.out.println(resultado2);
                 
@@ -338,6 +339,7 @@ public class FrameInicio extends javax.swing.JFrame {
                 var tabla = new TablaSimbolos();
                 tabla.setNombre("GLOBAL");
                 ast.setConsola("");
+                System.out.println(ast.getInstrucciones());
                 for (var a : ast.getInstrucciones()) {
                     var res = a.interpretar(ast, tabla);
                 }
@@ -348,7 +350,7 @@ public class FrameInicio extends javax.swing.JFrame {
                 System.out.println("Algo salio mal");
                 System.out.println(e);
             }
-            
+            // */
             //jTextArea1.setText(consola2);
         }
         
@@ -511,7 +513,6 @@ public class FrameInicio extends javax.swing.JFrame {
             return null;
         } 
     } 
-    
     
     
     

@@ -13,6 +13,8 @@ import Instrucciones.Print;
 
 //expresiones
 import Expresiones.Nativo;
+import Expresiones.Aritmeticas;
+import Expresiones.OperadoresAritmeticos;
 
 //------> Codigo para el parser
 //------> Declaracion de variables, funciones y funciones de error
@@ -50,9 +52,12 @@ terminal String ID;
 terminal String DOSPUNTOS, DOBLEDOSPUNTOS;
 terminal String COMA, PUNTOYCOMA, IGUAL;
 terminal String PARENTESIS_A, PARENTESIS_C;
-terminal String MENOR, MAYOR, GUION;
+terminal String MENOR, MAYOR;
 terminal String CORCHETE_A, CORCHETE_C;
-terminal String CHAR, DOUBLE, VAR, ARR;
+terminal String DOBLEIGUAL, DIFERENCIA, MENORIGUAL, MAYORIGUAL;
+terminal String OR, AND, XOR, NOT;
+terminal String MAS, MENOS, POR, DIV, MODULO, POTENCIA;
+terminal CADENA, CARACTER;
 terminal PRINTLN;
 
 
@@ -93,4 +98,6 @@ imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESUL
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
     | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}
     | ID:val                                                     {:  :}
+    | CADENA: val                                                {: RESULT = new Nativo(val, new Tipo(TipoDato.CADENA), valleft, valright ); :}
+    | CARACTER: val                                              {: RESULT = new Nativo(val, new Tipo(TipoDato.CARACTER), valleft, valright ); :}
 ;

@@ -41,5 +41,9 @@ public class TablaSimbolos {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }   
+    }
+    
+    public void addSimbolo(Simbolo nuevo){
+        
+    }
 }

@@ -8,5 +8,6 @@ public enum TipoDato {
     CARACTER,
     CADENA,
     VOID,
-    ID
+    ID,
+    VARIABLE
 }

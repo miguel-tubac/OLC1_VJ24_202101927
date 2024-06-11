@@ -65,8 +65,15 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
 //------> Instrucciones
 <YYINITIAL> "println"       { return new Symbol(sym.PRINTLN, yycolumn, yyline, yytext());}
-<YYINITIAL> "true"       { return new Symbol(sym.TRUE, yycolumn, yyline, yytext());}
-<YYINITIAL> "false"       { return new Symbol(sym.FALSE, yycolumn, yyline, yytext());}
+<YYINITIAL> "true"          { return new Symbol(sym.TRUE, yycolumn, yyline, yytext());}
+<YYINITIAL> "false"         { return new Symbol(sym.FALSE, yycolumn, yyline, yytext());}
+<YYINITIAL> "var"           { return new Symbol(sym.VAR, yycolumn, yyline, yytext());}
+<YYINITIAL> "const"         { return new Symbol(sym.CONST, yycolumn, yyline, yytext());}
+<YYINITIAL> "int"           { return new Symbol(sym.INT, yycolumn, yyline, yytext());}
+<YYINITIAL> "double"        { return new Symbol(sym.DOUBLE, yycolumn, yyline, yytext());}
+<YYINITIAL> "bool"          { return new Symbol(sym.BOOL, yycolumn, yyline, yytext());}
+<YYINITIAL> "char"          { return new Symbol(sym.CHAR, yycolumn, yyline, yytext());}
+<YYINITIAL> "String"        { return new Symbol(sym.STRING, yycolumn, yyline, yytext());}
 
 //------> Operadores
 

@@ -10,6 +10,8 @@ import Simbolo.TipoDato;
 
 //instrucciones
 import Instrucciones.Print;
+import Instrucciones.DeclaracionVariables;
+import Instrucciones.OperadoresVariables;
 
 //expresiones
 import Expresiones.Nativo;
@@ -63,6 +65,8 @@ terminal String OR, AND, XOR, NOT;
 terminal String MAS, MENOS, POR, DIV, MODULO, POTENCIA;
 terminal CADENA, CARACTER;
 terminal PRINTLN;
+terminal String VAR, CONST;
+terminal String INT, DOUBLE, BOOL, CHAR, STRING;
 
 
 
@@ -71,7 +75,8 @@ terminal PRINTLN;
 non terminal LinkedList<Instruccion> inicio, lista_instrucciones;
 non terminal Instruccion expresion;
 non terminal Instruccion instruccion;
-non terminal Instruccion imprimir;
+non terminal Instruccion imprimir, variables, mutabilidad, tipo;
+non terminal Instruccion casteos;
 
 
 //------> PRECEDENCIA
@@ -101,7 +106,26 @@ lista_instrucciones ::=   lista_instrucciones:var1 instruccion:var2   {: RESULT 
 ;
 
 instruccion ::= imprimir:var     {: RESULT = var; :} 
+    | variables:var              {: RESULT = var; :}
     | error PUNTOYCOMA
+;
+
+variables ::=  mutabilidad:a ID:b DOSPUNTOS tipo:c PUNTOYCOMA               //{: RESULT = new DeclaracionVariables(a, b, c, aleft, aright); :}
+    | mutabilidad:a ID:b DOSPUNTOS tipo:c IGUAL expresion:d PUNTOYCOMA      
+;
+
+mutabilidad ::=  VAR    //{: RESULT = OperadoresVariables.VAR; :}
+    | CONST             //{: RESULT = OperadoresVariables.CONST; :}
+;
+
+tipo ::= INT    //{: RESULT = OperadoresVariables.INT; :} 
+    | DOUBLE    //{: RESULT = OperadoresVariables.DOUBLE; :} 
+    | BOOL      //{: RESULT = OperadoresVariables.BOOL; :} 
+    | CHAR      //{: RESULT = OperadoresVariables.CHAR; :} 
+    | STRING    //{: RESULT = OperadoresVariables.STRING; :}
+;
+
+casteos ::= PARENTESIS_A tipo:a PARENTESIS_C expresion:b
 ;
 
 imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESULT = new Print(var, varleft, varright); :} 
@@ -132,4 +156,6 @@ expresion ::= NUMERODECIMAL:val                                  {: RESULT = new
     | expresion:a AND expresion:b                                {: RESULT = new Logicos(a, b, OperadoresLogicos.AND, aleft, aright); :}
     | expresion:a XOR expresion:b                                {: RESULT = new Logicos(a, b, OperadoresLogicos.XOR, aleft, aright); :}
     | NOT expresion:a                                            {: RESULT = new Logicos(a, a, OperadoresLogicos.NOT, aleft, aright); :}
+    | PARENTESIS_A expresion:a PARENTESIS_C                      {: RESULT = a; :}
+    | casteos:a                                                  {: RESULT = a; :}
 ;

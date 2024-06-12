@@ -12,6 +12,7 @@ import Simbolo.TipoDato;
 import Instrucciones.Print;
 import Instrucciones.DeclaracionVariables;
 import Instrucciones.OperadoresVariables;
+import Instrucciones.DeclaracionVariablesConExpresion;
 
 //expresiones
 import Expresiones.Nativo;
@@ -114,7 +115,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
 ;
 
 variables ::=  mutabilidad:a ID:b DOSPUNTOS tipo:c PUNTOYCOMA               {: RESULT = new DeclaracionVariables(a, b, c, aleft, aright); :}
-    | mutabilidad:a ID:b DOSPUNTOS tipo:c IGUAL expresion:d PUNTOYCOMA      
+    | mutabilidad:a ID:b DOSPUNTOS tipo:c IGUAL expresion:d PUNTOYCOMA      {: RESULT = new DeclaracionVariablesConExpresion(a, b, c, d, aleft, aright); :}    
 ;
 
 mutabilidad ::=  VAR    {: RESULT = TipoDato.VAR; :}

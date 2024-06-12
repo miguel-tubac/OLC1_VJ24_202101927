@@ -9,12 +9,12 @@ import Instrucciones.ValorVariable;
 
 public class AccesoALaVariable extends Instruccion {
     private String id;
-    private Tipo tipo;
+    //private Tipo tipo;
     
     public AccesoALaVariable(String id, Tipo tipo, int linea, int col) {
-        super(new Tipo(TipoDato.ID), linea, col);
+        super(tipo, linea, col);
         this.id = id;
-        this.tipo = tipo;
+        //this.tipo = tipo;
     }
     
     
@@ -47,22 +47,27 @@ public class AccesoALaVariable extends Instruccion {
     }
     
     public Object acceso_A_INT(ValorVariable valor){
+        this.tipo.setTipo(TipoDato.ENTERO);//Se actualiza el tipo
         return valor.getValor(); // Retornar el valor del símbolo
     }      
     
     public Object acceso_A_DOUBLE(ValorVariable valor){
+        this.tipo.setTipo(TipoDato.DECIMAL);
         return valor.getValorDouble(); // Retornar el valor del símbolo
     }
     
     public Object acceso_A_BOOLEAN(ValorVariable valor){
+        this.tipo.setTipo(TipoDato.BOOLEANO);
         return valor.isValorBoolean(); // Retornar el valor del símbolo
     }
     
     public Object acceso_A_CHAR(ValorVariable valor){
+        this.tipo.setTipo(TipoDato.CARACTER);
         return valor.getValorChar(); // Retornar el valor del símbolo
     }
     
     public Object acceso_A_STRING(ValorVariable valor){
+        this.tipo.setTipo(TipoDato.CADENA);
         return valor.getValorString(); // Retornar el valor del símbolo
     }
 }

@@ -36,6 +36,7 @@ public class Aritmeticas extends Instruccion {
             }
         } else {//esto es cuando se instancia objetos del metodo constructor que recive dos parametros de operacion
             opIzq = this.operando1.interpretar(arbol, tabla);//aca se interpreta
+            //System.out.println("Aqui: "+ opIzq);
             if (opIzq instanceof Errores) {
                 return opIzq;
             }
@@ -68,6 +69,7 @@ public class Aritmeticas extends Instruccion {
     //*************************************************Suma**************************************
     public Object suma(Object op1, Object op2) {
         var tipo1 = this.operando1.tipo.getTipo();
+        //System.out.println("Tipo: "+ tipo1);
         var tipo2 = this.operando2.tipo.getTipo();
 
         switch (tipo1) {
@@ -397,7 +399,9 @@ public class Aritmeticas extends Instruccion {
                     //entero / entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 / (int) op2;
+                        //System.out.println("op1 "+ (double) op1);
+                        //System.out.println("op2 "+ (double) op2);
+                        return ((Number) op1).doubleValue() / ((Number) op2).doubleValue();
                     }
                     //entero / decimal = decimal
                     case TipoDato.DECIMAL -> {
@@ -407,7 +411,7 @@ public class Aritmeticas extends Instruccion {
                     //entero - caracter = entero
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 /  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() /  (double)((int)(op2.toString()).charAt(0));
                     }
                     //Error
                     default -> {
@@ -445,7 +449,7 @@ public class Aritmeticas extends Instruccion {
                     // caracter / entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int)(op1.toString()).charAt(0) / (int) op2;
+                        return (double)((int)(op1.toString()).charAt(0)) / ((Number) op2).doubleValue();
                     }
                     // caracter / decimal = decimal
                     case TipoDato.DECIMAL -> {

@@ -14,6 +14,7 @@ import Simbolo.TipoDato;
 import Instrucciones.Print;
 import Instrucciones.DeclaracionVariables;
 import Instrucciones.OperadoresVariables;
+import Instrucciones.DeclaracionVariablesConExpresion;
 import Expresiones.Nativo;
 import Expresiones.Aritmeticas;
 import Expresiones.OperadoresAritmeticos;
@@ -458,7 +459,7 @@ class CUP$Parser$actions {
 		int dleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		Instruccion d = (Instruccion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-
+		 RESULT = new DeclaracionVariablesConExpresion(a, b, c, d, aleft, aright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("variables",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

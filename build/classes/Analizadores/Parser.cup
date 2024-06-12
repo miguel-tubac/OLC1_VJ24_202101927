@@ -21,6 +21,7 @@ import Expresiones.Relacionales;
 import Expresiones.OperadoresRelacionales;
 import Expresiones.Logicos;
 import Expresiones.OperadoresLogicos;
+import Expresiones.AccesoALaVariable;
                    
 //------> Codigo para el parser
 //------> Declaracion de variables, funciones y funciones de error
@@ -65,8 +66,8 @@ terminal String OR, AND, XOR, NOT;
 terminal String MAS, MENOS, POR, DIV, MODULO, POTENCIA;
 terminal CADENA, CARACTER;
 terminal PRINTLN;
-terminal String VAR, CONST;
-terminal String INT, DOUBLE, BOOL, CHAR, STRING;
+terminal VAR, CONST;
+terminal INT, DOUBLE, BOOL, CHAR, STRING;
 
 
 
@@ -75,7 +76,9 @@ terminal String INT, DOUBLE, BOOL, CHAR, STRING;
 non terminal LinkedList<Instruccion> inicio, lista_instrucciones;
 non terminal Instruccion expresion;
 non terminal Instruccion instruccion;
-non terminal Instruccion imprimir, variables, mutabilidad, tipo;
+non terminal Instruccion imprimir, variables; 
+non terminal OperadoresVariables tipo;
+non terminal TipoDato mutabilidad;
 non terminal Instruccion casteos;
 
 
@@ -110,19 +113,19 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | error PUNTOYCOMA
 ;
 
-variables ::=  mutabilidad:a ID:b DOSPUNTOS tipo:c PUNTOYCOMA               //{: RESULT = new DeclaracionVariables(a, b, c, aleft, aright); :}
+variables ::=  mutabilidad:a ID:b DOSPUNTOS tipo:c PUNTOYCOMA               {: RESULT = new DeclaracionVariables(a, b, c, aleft, aright); :}
     | mutabilidad:a ID:b DOSPUNTOS tipo:c IGUAL expresion:d PUNTOYCOMA      
 ;
 
-mutabilidad ::=  VAR    //{: RESULT = OperadoresVariables.VAR; :}
-    | CONST             //{: RESULT = OperadoresVariables.CONST; :}
+mutabilidad ::=  VAR    {: RESULT = TipoDato.VAR; :}
+    | CONST             {: RESULT = TipoDato.CONST; :}
 ;
 
-tipo ::= INT    //{: RESULT = OperadoresVariables.INT; :} 
-    | DOUBLE    //{: RESULT = OperadoresVariables.DOUBLE; :} 
-    | BOOL      //{: RESULT = OperadoresVariables.BOOL; :} 
-    | CHAR      //{: RESULT = OperadoresVariables.CHAR; :} 
-    | STRING    //{: RESULT = OperadoresVariables.STRING; :}
+tipo ::= INT    {: RESULT = OperadoresVariables.INT; :} 
+    | DOUBLE    {: RESULT = OperadoresVariables.DOUBLE; :} 
+    | BOOL      {: RESULT = OperadoresVariables.BOOL; :} 
+    | CHAR      {: RESULT = OperadoresVariables.CHAR; :} 
+    | STRING    {: RESULT = OperadoresVariables.STRING; :}
 ;
 
 casteos ::= PARENTESIS_A tipo:a PARENTESIS_C expresion:b
@@ -134,7 +137,7 @@ imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESUL
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
     | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}
-    | ID:val                                                     {: RESULT = new Nativo(val, new Tipo(TipoDato.ID), valleft, valright ); :}
+    | ID:val                                                     {: RESULT = new AccesoALaVariable(val, new Tipo(TipoDato.ID), valleft, valright ); :}
     | CADENA: val                                                {: RESULT = new Nativo(val, new Tipo(TipoDato.CADENA), valleft, valright ); :}
     | CARACTER: val                                              {: RESULT = new Nativo(val, new Tipo(TipoDato.CARACTER), valleft, valright ); :}
     | TRUE :val                                                  {: RESULT = new Nativo(true, new Tipo(TipoDato.BOOLEANO), valleft, valright ); :}

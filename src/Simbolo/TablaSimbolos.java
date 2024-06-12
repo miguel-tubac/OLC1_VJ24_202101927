@@ -43,7 +43,29 @@ public class TablaSimbolos {
         this.nombre = nombre;
     }
     
-    public void addSimbolo(Simbolo nuevo){
+    public boolean addSimbolo(Simbolo nuevo) {
+        if (nuevo != null && nuevo.getId() != null) {
+            if (tablaActual.containsKey(nuevo.getId())) {
+                System.out.println("El símbolo con id " + nuevo.getId() + " ya existe.");
+                return false;
+                //throw new IllegalArgumentException("El símbolo con id " + nuevo.getId() + " ya existe.");
+                //return new Error();
+            } else {
+                tablaActual.put(nuevo.getId(), nuevo);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Simbolo buscarSimbolo(String id) {
+        if (tablaActual.containsKey(id)) {
+            return (Simbolo) tablaActual.get(id);
+        } else if (tablaAnterior != null) {
+            return tablaAnterior.buscarSimbolo(id);
+        } else {
+            return null; // o lanzar una excepción si el símbolo no se encuentra
+        }
         
     }
 }

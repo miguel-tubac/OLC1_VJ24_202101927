@@ -9,5 +9,6 @@ public enum TipoDato {
     CADENA,
     VOID,
     ID,
-    VARIABLE
+    VAR,
+    CONST
 }

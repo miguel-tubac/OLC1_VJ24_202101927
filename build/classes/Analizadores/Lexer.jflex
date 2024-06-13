@@ -2,24 +2,33 @@
 package Analizadores; 
 
 import java_cup.runtime.*;
+import java.util.LinkedList;
+import Excepciones.Errores;
 
 %%	
+%{
+    public LinkedList<Errores> listaErrores = new LinkedList<>();
+    String cadena = "";
+%}
+
+%init{
+    yyline = 1;
+    yycolumn = 1;
+    listaErrores = new LinkedList<>();
+%init}
+
+
 //-------> Directivas (No tocar)
 
-%public 
+%cup 
 %class Lexer
-%cup
+%public
+%line
 %char
 %column
-%line
-%unicode
+//%unicode
 %ignorecase
 
-%{
-    //Tokens token;
-    //Errores error;
-    String cadena = "";
-%} 
 
 %state CADENA
 %state CARACTER
@@ -37,50 +46,52 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 //luego de cada declarion debo de ir y declararla en Parser.cup en "Declaración de terminales"
 
 //------> Simbolos
-<YYINITIAL> ":"       { return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext());}
-<YYINITIAL> "::"      { return new Symbol(sym.DOBLEDOSPUNTOS, yycolumn, yyline, yytext());}
-<YYINITIAL> ","       { return new Symbol(sym.COMA, yycolumn, yyline, yytext());}
-<YYINITIAL> "("       { return new Symbol(sym.PARENTESIS_A, yycolumn, yyline, yytext());}
-<YYINITIAL> ")"       { return new Symbol(sym.PARENTESIS_C, yycolumn, yyline, yytext());}
-<YYINITIAL> ";"       { return new Symbol(sym.PUNTOYCOMA, yycolumn, yyline, yytext());}
-<YYINITIAL> "="       { return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());}
-<YYINITIAL> "=="      { return new Symbol(sym.DOBLEIGUAL, yycolumn, yyline, yytext());}
-<YYINITIAL> "!="      { return new Symbol(sym.DIFERENCIA, yycolumn, yyline, yytext());}
-<YYINITIAL> "<"       { return new Symbol(sym.MENOR, yycolumn, yyline, yytext());}
-<YYINITIAL> "<="      { return new Symbol(sym.MENORIGUAL, yycolumn, yyline, yytext());}
-<YYINITIAL> ">"       { return new Symbol(sym.MAYOR, yycolumn, yyline, yytext());}
-<YYINITIAL> ">="      { return new Symbol(sym.MAYORIGUAL, yycolumn, yyline, yytext());}
-<YYINITIAL> "["       { return new Symbol(sym.CORCHETE_A, yycolumn, yyline, yytext());}
-<YYINITIAL> "]"       { return new Symbol(sym.CORCHETE_C, yycolumn, yyline, yytext());}
-<YYINITIAL> "-"       { return new Symbol(sym.MENOS, yycolumn, yyline, yytext());}
-<YYINITIAL> "+"       { return new Symbol(sym.MAS, yycolumn, yyline, yytext());}
-<YYINITIAL> "*"       { return new Symbol(sym.POR, yycolumn, yyline, yytext());}
-<YYINITIAL> "/"       { return new Symbol(sym.DIV, yycolumn, yyline, yytext());}
-<YYINITIAL> "**"      { return new Symbol(sym.POTENCIA, yycolumn, yyline, yytext());}
-<YYINITIAL> "%"       { return new Symbol(sym.MODULO, yycolumn, yyline, yytext());}
-<YYINITIAL> "||"      { return new Symbol(sym.OR, yycolumn, yyline, yytext());}
-<YYINITIAL> "&&"      { return new Symbol(sym.AND, yycolumn, yyline, yytext());}
-<YYINITIAL> "^"       { return new Symbol(sym.XOR, yycolumn, yyline, yytext());}
-<YYINITIAL> "!"       { return new Symbol(sym.NOT, yycolumn, yyline, yytext());}
+<YYINITIAL> ":"       { return new Symbol(sym.DOSPUNTOS, yyline, yycolumn, yytext());}
+<YYINITIAL> "::"      { return new Symbol(sym.DOBLEDOSPUNTOS, yyline, yycolumn, yytext());}
+<YYINITIAL> ","       { return new Symbol(sym.COMA, yyline, yycolumn, yytext());}
+<YYINITIAL> "("       { return new Symbol(sym.PARENTESIS_A, yyline, yycolumn, yytext());}
+<YYINITIAL> ")"       { return new Symbol(sym.PARENTESIS_C, yyline, yycolumn, yytext());}
+<YYINITIAL> ";"       { return new Symbol(sym.PUNTOYCOMA, yyline, yycolumn, yytext());}
+<YYINITIAL> "="       { return new Symbol(sym.IGUAL, yyline,yycolumn, yytext());}
+<YYINITIAL> "=="      { return new Symbol(sym.DOBLEIGUAL, yyline, yycolumn, yytext());}
+<YYINITIAL> "!="      { return new Symbol(sym.DIFERENCIA, yyline, yycolumn, yytext());}
+<YYINITIAL> "<"       { return new Symbol(sym.MENOR, yyline, yycolumn, yytext());}
+<YYINITIAL> "<="      { return new Symbol(sym.MENORIGUAL, yyline, yycolumn, yytext());}
+<YYINITIAL> ">"       { return new Symbol(sym.MAYOR, yyline, yycolumn, yytext());}
+<YYINITIAL> ">="      { return new Symbol(sym.MAYORIGUAL, yyline, yycolumn, yytext());}
+<YYINITIAL> "["       { return new Symbol(sym.CORCHETE_A,  yyline,yycolumn, yytext());}
+<YYINITIAL> "]"       { return new Symbol(sym.CORCHETE_C,  yyline,yycolumn, yytext());}
+<YYINITIAL> "{"       { return new Symbol(sym.LLAVE_A,  yyline,yycolumn, yytext());}
+<YYINITIAL> "}"       { return new Symbol(sym.LLAVE_C, yyline,yycolumn, yytext());}
+<YYINITIAL> "-"       { return new Symbol(sym.MENOS, yyline,yycolumn, yytext());}
+<YYINITIAL> "+"       { return new Symbol(sym.MAS,  yyline,yycolumn, yytext());}
+<YYINITIAL> "*"       { return new Symbol(sym.POR, yyline,yycolumn, yytext());}
+<YYINITIAL> "/"       { return new Symbol(sym.DIV, yyline,yycolumn, yytext());}
+<YYINITIAL> "**"      { return new Symbol(sym.POTENCIA,  yyline,yycolumn, yytext());}
+<YYINITIAL> "%"       { return new Symbol(sym.MODULO,  yyline,yycolumn, yytext());}
+<YYINITIAL> "||"      { return new Symbol(sym.OR, yyline, yycolumn,yytext());}
+<YYINITIAL> "&&"      { return new Symbol(sym.AND, yyline,yycolumn, yytext());}
+<YYINITIAL> "^"       { return new Symbol(sym.XOR, yyline, yycolumn,yytext());}
+<YYINITIAL> "!"       { return new Symbol(sym.NOT, yyline,yycolumn, yytext());}
 
 //------> Instrucciones
-<YYINITIAL> "println"       { return new Symbol(sym.PRINTLN, yycolumn, yyline, yytext());}
-<YYINITIAL> "true"          { return new Symbol(sym.TRUE, yycolumn, yyline, yytext());}
-<YYINITIAL> "false"         { return new Symbol(sym.FALSE, yycolumn, yyline, yytext());}
-<YYINITIAL> "var"           { return new Symbol(sym.VAR, yycolumn, yyline, yytext());}
-<YYINITIAL> "const"         { return new Symbol(sym.CONST, yycolumn, yyline, yytext());}
-<YYINITIAL> "int"           { return new Symbol(sym.INT, yycolumn, yyline, yytext());}
-<YYINITIAL> "double"        { return new Symbol(sym.DOUBLE, yycolumn, yyline, yytext());}
-<YYINITIAL> "bool"          { return new Symbol(sym.BOOL, yycolumn, yyline, yytext());}
-<YYINITIAL> "char"          { return new Symbol(sym.CHAR, yycolumn, yyline, yytext());}
-<YYINITIAL> "String"        { return new Symbol(sym.STRING, yycolumn, yyline, yytext());}
+<YYINITIAL> "println"       { return new Symbol(sym.PRINTLN, yyline, yycolumn, yytext());}
+<YYINITIAL> "true"          { return new Symbol(sym.TRUE, yyline,yycolumn, yytext());}
+<YYINITIAL> "false"         { return new Symbol(sym.FALSE, yyline,yycolumn, yytext());}
+<YYINITIAL> "var"           { return new Symbol(sym.VAR, yyline,yycolumn, yytext());}
+<YYINITIAL> "const"         { return new Symbol(sym.CONST, yyline,yycolumn, yytext());}
+<YYINITIAL> "int"           { return new Symbol(sym.INT, yyline,yycolumn, yytext());}
+<YYINITIAL> "double"        { return new Symbol(sym.DOUBLE, yyline,yycolumn, yytext());}
+<YYINITIAL> "bool"          { return new Symbol(sym.BOOL, yyline,yycolumn, yytext());}
+<YYINITIAL> "char"          { return new Symbol(sym.CHAR, yyline, yycolumn,yytext());}
+<YYINITIAL> "String"        { return new Symbol(sym.STRING, yyline, yycolumn,yytext());}
 
 //------> Operadores
 
 //------> Expresiones
-<YYINITIAL> {entero}            { return new Symbol(sym.ENTERO, yycolumn, yyline, yytext()); }
-<YYINITIAL> {numero_decimal}    { return new Symbol(sym.NUMERODECIMAL, yycolumn, yyline, yytext()); }
-<YYINITIAL> {id}                { return new Symbol(sym.ID, yycolumn, yyline, yytext()); }
+<YYINITIAL> {entero}            { return new Symbol(sym.ENTERO, yyline, yycolumn, yytext()); }
+<YYINITIAL> {numero_decimal}    { return new Symbol(sym.NUMERODECIMAL,  yyline,yycolumn, yytext()); }
+<YYINITIAL> {id}                { return new Symbol(sym.ID,  yyline, yycolumn, yytext()); }
 <YYINITIAL> {comentario_linea}        {}
 <YYINITIAL> {comentario_multiple}     {}
 
@@ -117,6 +128,7 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> [ \t\r\n\f]     {/* Espacios en blanco se ignoran */}
 
 //------> Errores Léxicos 
-<YYINITIAL> .           	{  
+<YYINITIAL> .   {  
+                    listaErrores.add(new Errores("LEXICO","El caracter "+yytext()+" NO pertenece al lenguaje", yyline, yycolumn));
                     System.out.println("Error Lexico: " + yytext() + " | Fila:" + yyline + " | Columna: " + yycolumn); 
                 }

@@ -7,12 +7,14 @@ import InterfasGrafica.FrameInicio;
 import Abstracto.Instruccion;
 import Simbolo.Tipo;
 import Simbolo.TipoDato;
+import Excepciones.Errores;
 
 //instrucciones
 import Instrucciones.Print;
 import Instrucciones.DeclaracionVariables;
 import Instrucciones.OperadoresVariables;
 import Instrucciones.DeclaracionVariablesConExpresion;
+import Instrucciones.Asignacion;
 
 //expresiones
 import Expresiones.Nativo;
@@ -29,20 +31,19 @@ import Expresiones.AccesoALaVariable;
 
 parser code 
 {:
-    //public static String resultado = "";
-    //Errores error;
-    //Simbolos sim;
+
+    public LinkedList<Errores> listaErrores = new LinkedList<>();
 
     public void syntax_error(Symbol s)
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
-            
+            listaErrores.add(new Errores("SINTACTICO RECUPERABLE","No se esperaba el componente "+s.value,s.left,s.right));
     }
 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Sin recuperacion." );
-            
+            listaErrores.add(new Errores("SINTACTICO NO RECUPERABLE", "No se esperaba el componente "+s.value, s.left, s.right));
     }
 
 :}
@@ -55,6 +56,7 @@ action code
 
 //------> Declaración de terminales
 terminal String ENTERO, TRUE, FALSE;
+terminal String LLAVE_A, LLAVE_C;
 terminal String NUMERODECIMAL;
 terminal String ID;
 terminal String DOSPUNTOS, DOBLEDOSPUNTOS;
@@ -77,7 +79,7 @@ terminal INT, DOUBLE, BOOL, CHAR, STRING;
 non terminal LinkedList<Instruccion> inicio, lista_instrucciones;
 non terminal Instruccion expresion;
 non terminal Instruccion instruccion;
-non terminal Instruccion imprimir, variables; 
+non terminal Instruccion imprimir, variables, asignacion; 
 non terminal OperadoresVariables tipo;
 non terminal TipoDato mutabilidad;
 non terminal Instruccion casteos;
@@ -111,7 +113,9 @@ lista_instrucciones ::=   lista_instrucciones:var1 instruccion:var2   {: RESULT 
 
 instruccion ::= imprimir:var     {: RESULT = var; :} 
     | variables:var              {: RESULT = var; :}
+    | asignacion:var             {: RESULT = var; :}
     | error PUNTOYCOMA
+    | error LLAVE_C
 ;
 
 variables ::=  mutabilidad:a ID:b DOSPUNTOS tipo:c PUNTOYCOMA               {: RESULT = new DeclaracionVariables(a, b, c, aleft, aright); :}
@@ -130,6 +134,9 @@ tipo ::= INT    {: RESULT = OperadoresVariables.INT; :}
 ;
 
 casteos ::= PARENTESIS_A tipo:a PARENTESIS_C expresion:b
+;
+
+asignacion ::= ID:a IGUAL expresion:b PUNTOYCOMA        {: RESULT = new Asignacion(a, b, aleft, aright); :}
 ;
 
 imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESULT = new Print(var, varleft, varright); :} 

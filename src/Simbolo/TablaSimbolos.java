@@ -51,7 +51,7 @@ public class TablaSimbolos {
                 //throw new IllegalArgumentException("El símbolo con id " + nuevo.getId() + " ya existe.");
                 //return new Error();
             } else {
-                tablaActual.put(nuevo.getId(), nuevo);
+                tablaActual.put(nuevo.getId().toLowerCase(), nuevo);
                 return true;
             }
         }
@@ -59,10 +59,10 @@ public class TablaSimbolos {
     }
 
     public Simbolo buscarSimbolo(String id) {
-        if (tablaActual.containsKey(id)) {
-            return (Simbolo) tablaActual.get(id);
+        if (tablaActual.containsKey(id.toLowerCase())) {
+            return (Simbolo) tablaActual.get(id.toLowerCase());
         } else if (tablaAnterior != null) {
-            return tablaAnterior.buscarSimbolo(id);
+            return tablaAnterior.buscarSimbolo(id.toLowerCase());
         } else {
             return null; // o lanzar una excepción si el símbolo no se encuentra
         }

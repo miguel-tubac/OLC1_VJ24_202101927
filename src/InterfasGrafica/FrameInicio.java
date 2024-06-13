@@ -1,7 +1,6 @@
 
 package InterfasGrafica;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -16,7 +15,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
 import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -26,37 +24,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import org.jfree.chart.JFreeChart;
 
-
-// Importaciones de prueba:
 
 import Abstracto.Instruccion;
+import Excepciones.Errores;
 import Simbolo.Arbol;
 import Simbolo.TablaSimbolos;
 
-//Fin de las importaciones de prueba
+
 
 public class FrameInicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameInicio
-     */
     
     public String nombreArchivo = "";
-    private static int indiceGraficaActual = 0;
-    private static LinkedList<JFreeChart> graficas = new LinkedList<>();
-    
-    public static LinkedList<Object> retorno = new LinkedList<>();
-    
-    //Esta es donde se alamcenan los valores de la grafica de barras
-    public static HashMap<String, Object> graficasBarras = new HashMap<>();
-    //Esta es donde se alamcenan los valores de la grafica de Pie
-    public static HashMap<String, Object> graficasPie = new HashMap<>();
-    //Esta es donde se alamcenan los valores de la grafica de Line
-    public static HashMap<String, Object> graficasLine = new HashMap<>();
-    //Esta es donde se alamcenan los valores de las calculos de Histgram
-    public static HashMap<String, Object> graficasHistogram = new HashMap<>();
+    static LinkedList<Errores> lista = new LinkedList<>();
     
     public FrameInicio() {
         initComponents();
@@ -158,28 +139,25 @@ public class FrameInicio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(117, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(104, 104, 104))))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addGap(18, 18, 18))
         );
 
         jMenu1.setText("Archivo");
@@ -323,14 +301,15 @@ public class FrameInicio extends javax.swing.JFrame {
             //Comente la llamada a la funcion ya que solo se debe de ejecutar una ves, para que genere los archivos .java en 
             //el paquete analizador
             
-             //  analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
+               analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
             
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
             
-            //  /* //------------------------------------------------------------------------------- Aqui 2
+              /* //------------------------------------------------------------------------------- Aqui 2
             try{
                 //System.out.println(texto);
+                lista.clear();
                 var resultado2 = analizar(texto); 
                 
                 //System.out.println(resultado2);
@@ -339,9 +318,22 @@ public class FrameInicio extends javax.swing.JFrame {
                 var tabla = new TablaSimbolos();
                 tabla.setNombre("GLOBAL");
                 ast.setConsola("");
-                System.out.println(ast.getInstrucciones());
+                //System.out.println(ast.getInstrucciones());//linea para depurar objetos
                 for (var a : ast.getInstrucciones()) {
+                    if (a == null) {
+                        continue;
+                    }
+                    
                     var res = a.interpretar(ast, tabla);
+                    if (res instanceof Errores) {
+                        lista.add((Errores) res);//Aca se agregan los errores semanticos
+                    }
+                }
+                
+                // Aca recorremos la lista de errores
+                for (var i : lista) {
+                    ast.Print(i.toString());
+                    System.out.println(i);
                 }
                 //System.out.println(ast.getConsola());
                 jTextArea1.setText(ast.getConsola());
@@ -501,8 +493,10 @@ public class FrameInicio extends javax.swing.JFrame {
     //Esta funcion recibe un estring u la analiza 
     public static Object analizar (String entrada){
         try {
-            Analizadores.Lexer lexer = new Analizadores.Lexer(new StringReader(entrada));//este es el analizaro lexico 
+            Analizadores.Lexer lexer = new Analizadores.Lexer(new StringReader(entrada));//este es el analizaro lexico
+             lista.addAll(lexer.listaErrores);
             Analizadores.Parser parser = new Analizadores.Parser(lexer);//lugo lo pasa al parser
+            lista.addAll(parser.listaErrores);
             var resultado = parser.parse();//aqui ya lo traduce
             return resultado.value;
         } catch (Exception e) {//esta son esepciones por si hay errores

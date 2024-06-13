@@ -16,6 +16,7 @@ import Instrucciones.OperadoresVariables;
 import Instrucciones.DeclaracionVariablesConExpresion;
 import Instrucciones.Asignacion;
 import Instrucciones.Casteos;
+import Instrucciones.IncrementoDecremento;
 
 //expresiones
 import Expresiones.Nativo;
@@ -68,6 +69,7 @@ terminal String CORCHETE_A, CORCHETE_C;
 terminal String DOBLEIGUAL, DIFERENCIA, MENORIGUAL, MAYORIGUAL;
 terminal String OR, AND, XOR, NOT;
 terminal String MAS, MENOS, POR, DIV, MODULO, POTENCIA;
+terminal String DOBLEMAS, DOBLEMENOS;
 terminal CADENA, CARACTER;
 terminal PRINTLN;
 terminal VAR, CONST;
@@ -84,6 +86,7 @@ non terminal Instruccion imprimir, variables, asignacion;
 non terminal OperadoresVariables tipo;
 non terminal TipoDato mutabilidad;
 non terminal Instruccion casteos;
+non terminal Instruccion incremento;
 
 
 //------> PRECEDENCIA
@@ -115,6 +118,7 @@ lista_instrucciones ::=   lista_instrucciones:var1 instruccion:var2   {: RESULT 
 instruccion ::= imprimir:var     {: RESULT = var; :} 
     | variables:var              {: RESULT = var; :}
     | asignacion:var             {: RESULT = var; :}
+    | incremento:var             {: RESULT = var; :}
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -143,6 +147,9 @@ asignacion ::= ID:a IGUAL expresion:b PUNTOYCOMA        {: RESULT = new Asignaci
 imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESULT = new Print(var, varleft, varright); :} 
 ;
 
+incremento ::= ID:a DOBLEMAS:b PUNTOYCOMA     {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
+    | ID:a DOBLEMENOS:b PUNTOYCOMA            {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
+;
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
     | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}
@@ -170,4 +177,5 @@ expresion ::= NUMERODECIMAL:val                                  {: RESULT = new
     | NOT expresion:a                                            {: RESULT = new Logicos(a, a, OperadoresLogicos.NOT, aleft, aright); :}
     | PARENTESIS_A expresion:a PARENTESIS_C                      {: RESULT = a; :}
     | casteos:a                                                  {: RESULT = a; :}
+    | incremento:a                                               {: RESULT = a; :}
 ;

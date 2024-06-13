@@ -64,7 +64,9 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> "{"       { return new Symbol(sym.LLAVE_A,  yyline,yycolumn, yytext());}
 <YYINITIAL> "}"       { return new Symbol(sym.LLAVE_C, yyline,yycolumn, yytext());}
 <YYINITIAL> "-"       { return new Symbol(sym.MENOS, yyline,yycolumn, yytext());}
+<YYINITIAL> "--"      { return new Symbol(sym.DOBLEMENOS, yyline,yycolumn, yytext());}
 <YYINITIAL> "+"       { return new Symbol(sym.MAS,  yyline,yycolumn, yytext());}
+<YYINITIAL> "++"      { return new Symbol(sym.DOBLEMAS,  yyline,yycolumn, yytext());}
 <YYINITIAL> "*"       { return new Symbol(sym.POR, yyline,yycolumn, yytext());}
 <YYINITIAL> "/"       { return new Symbol(sym.DIV, yyline,yycolumn, yytext());}
 <YYINITIAL> "**"      { return new Symbol(sym.POTENCIA,  yyline,yycolumn, yytext());}

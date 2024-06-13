@@ -17,6 +17,7 @@ import Instrucciones.DeclaracionVariables;
 import Instrucciones.OperadoresVariables;
 import Instrucciones.DeclaracionVariablesConExpresion;
 import Instrucciones.Asignacion;
+import Instrucciones.Casteos;
 import Expresiones.Nativo;
 import Expresiones.Aritmeticas;
 import Expresiones.OperadoresAritmeticos;
@@ -311,8 +312,6 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
-    //scanner s;
-    //parser(scanner s){this.s = s;}
 
     public LinkedList<Errores> listaErrores = new LinkedList<>();
 
@@ -575,7 +574,7 @@ class CUP$Parser$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Instruccion b = (Instruccion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-
+		 RESULT = new Casteos(a,b, aleft, aright); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("casteos",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

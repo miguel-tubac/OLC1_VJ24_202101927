@@ -15,6 +15,7 @@ import Instrucciones.DeclaracionVariables;
 import Instrucciones.OperadoresVariables;
 import Instrucciones.DeclaracionVariablesConExpresion;
 import Instrucciones.Asignacion;
+import Instrucciones.Casteos;
 
 //expresiones
 import Expresiones.Nativo;
@@ -133,7 +134,7 @@ tipo ::= INT    {: RESULT = OperadoresVariables.INT; :}
     | STRING    {: RESULT = OperadoresVariables.STRING; :}
 ;
 
-casteos ::= PARENTESIS_A tipo:a PARENTESIS_C expresion:b
+casteos ::= PARENTESIS_A tipo:a PARENTESIS_C expresion:b {: RESULT = new Casteos(a,b, aleft, aright); :}
 ;
 
 asignacion ::= ID:a IGUAL expresion:b PUNTOYCOMA        {: RESULT = new Asignacion(a, b, aleft, aright); :}

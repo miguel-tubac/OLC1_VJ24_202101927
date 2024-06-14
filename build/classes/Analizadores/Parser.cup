@@ -18,6 +18,9 @@ import Instrucciones.Asignacion;
 import Instrucciones.Casteos;
 import Instrucciones.IncrementoDecremento;
 import Instrucciones.SentenciasIF;
+import Instrucciones.BloqueSentencia;
+import Instrucciones.Break;
+import Instrucciones.Continue;
 
 //expresiones
 import Expresiones.Nativo;
@@ -76,6 +79,7 @@ terminal CADENA, CARACTER;
 terminal PRINTLN;
 terminal VAR, CONST;
 terminal INT, DOUBLE, BOOL, CHAR, STRING;
+terminal String BREAK, CONTINUE, RETURN;
 
 
 
@@ -89,7 +93,8 @@ non terminal OperadoresVariables tipo;
 non terminal TipoDato mutabilidad;
 non terminal Instruccion casteos;
 non terminal Instruccion incremento;
-non terminal Instruccion sentecia_if, sentencia_elseif, lista_objetos;
+non terminal Instruccion sentecia_if, sentencia_elseif, sentencia_bloque; 
+non terminal Instruccion sentenciasTransferencia;
 
 
 //------> PRECEDENCIA
@@ -123,6 +128,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | asignacion:var             {: RESULT = var; :}
     | incremento:var             {: RESULT = var; :}
     | sentecia_if:var            {: RESULT = var; :}
+    | sentenciasTransferencia:var {: RESULT = var; :}
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -155,17 +161,22 @@ incremento ::= ID:a DOBLEMAS:b PUNTOYCOMA     {: RESULT = new IncrementoDecremen
     | ID:a DOBLEMENOS:b PUNTOYCOMA            {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
 ;
 
-sentecia_if ::= IF PARENTESIS_A expresion:a PARENTESIS_C lista_objetos sentencia_elseif:c //{: RESULT = new SentenciasIF(a,b,c, aleft, aright); :}
+sentecia_if ::= IF PARENTESIS_A expresion:a PARENTESIS_C  sentencia_bloque:b  sentencia_elseif:c   {: RESULT = new SentenciasIF(a,b,c, aleft, aright); :}
 ;
 
-sentencia_elseif ::= ELSE lista_objetos
-    | ELSE sentecia_if
-    |      {: RESULT = null; :}
+sentencia_elseif ::= ELSE sentencia_bloque:a    {: RESULT = a; :}
+    |  ELSE sentecia_if:a                       {: RESULT = a; :} 
+    |                                           {: RESULT = null; :}
 ;
 
-lista_objetos ::= LLAVE_A lista_instrucciones LLAVE_C
-    | LLAVE_A LLAVE_C
+sentencia_bloque ::= LLAVE_A lista_instrucciones:a LLAVE_C  {: RESULT = new BloqueSentencia(a, aleft, aright); :}
 ;
+
+sentenciasTransferencia ::= RETURN expresion PUNTOYCOMA    
+    | RETURN  PUNTOYCOMA                                    
+    | BREAK:a PUNTOYCOMA                                       {: RESULT = new Break(aleft, aright); :}
+    | CONTINUE:a PUNTOYCOMA                                    {: RESULT = new Continue(aleft, aright); :}
+    ;
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
     | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}

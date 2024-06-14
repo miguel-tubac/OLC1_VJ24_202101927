@@ -21,6 +21,7 @@ public class sym {
   public static final int ENTERO = 2;
   public static final int XOR = 26;
   public static final int DOUBLE = 44;
+  public static final int CONTINUE = 49;
   public static final int INT = 43;
   public static final int CORCHETE_C = 19;
   public static final int PRINTLN = 40;
@@ -40,6 +41,7 @@ public class sym {
   public static final int ID = 8;
   public static final int MAYORIGUAL = 23;
   public static final int EOF = 0;
+  public static final int RETURN = 50;
   public static final int TRUE = 3;
   public static final int error = 1;
   public static final int COMA = 11;
@@ -47,6 +49,7 @@ public class sym {
   public static final int MODULO = 32;
   public static final int MENOS = 29;
   public static final int MENOR = 16;
+  public static final int BREAK = 48;
   public static final int MAYOR = 17;
   public static final int POTENCIA = 33;
   public static final int ELSE = 37;
@@ -104,7 +107,10 @@ public class sym {
   "DOUBLE",
   "BOOL",
   "CHAR",
-  "STRING"
+  "STRING",
+  "BREAK",
+  "CONTINUE",
+  "RETURN"
   };
 }
 

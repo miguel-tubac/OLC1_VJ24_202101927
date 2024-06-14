@@ -10,5 +10,8 @@ public enum TipoDato {
     VOID,
     ID,
     VAR,
-    CONST
+    CONST,
+    CONTINUE,
+    BREAK,
+    RETURN
 }

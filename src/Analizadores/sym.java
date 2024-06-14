@@ -13,17 +13,17 @@ public class sym {
   public static final int DIFERENCIA = 21;
   public static final int DOBLEIGUAL = 20;
   public static final int DOBLEDOSPUNTOS = 10;
-  public static final int CHAR = 44;
-  public static final int CONST = 40;
+  public static final int CHAR = 46;
+  public static final int CONST = 42;
   public static final int POR = 30;
   public static final int DOBLEMAS = 34;
   public static final int PUNTOYCOMA = 12;
   public static final int ENTERO = 2;
   public static final int XOR = 26;
-  public static final int DOUBLE = 42;
-  public static final int INT = 41;
+  public static final int DOUBLE = 44;
+  public static final int INT = 43;
   public static final int CORCHETE_C = 19;
-  public static final int PRINTLN = 38;
+  public static final int PRINTLN = 40;
   public static final int CORCHETE_A = 18;
   public static final int LLAVE_C = 6;
   public static final int LLAVE_A = 5;
@@ -32,27 +32,29 @@ public class sym {
   public static final int AND = 25;
   public static final int DOBLEMENOS = 35;
   public static final int IGUAL = 13;
-  public static final int CARACTER = 37;
+  public static final int CARACTER = 39;
   public static final int OR = 24;
-  public static final int BOOL = 43;
+  public static final int BOOL = 45;
   public static final int DIV = 31;
+  public static final int IF = 36;
   public static final int ID = 8;
   public static final int MAYORIGUAL = 23;
   public static final int EOF = 0;
   public static final int TRUE = 3;
   public static final int error = 1;
   public static final int COMA = 11;
-  public static final int CADENA = 36;
+  public static final int CADENA = 38;
   public static final int MODULO = 32;
   public static final int MENOS = 29;
   public static final int MENOR = 16;
   public static final int MAYOR = 17;
   public static final int POTENCIA = 33;
+  public static final int ELSE = 37;
   public static final int PARENTESIS_C = 15;
   public static final int PARENTESIS_A = 14;
-  public static final int STRING = 45;
+  public static final int STRING = 47;
   public static final int FALSE = 4;
-  public static final int VAR = 39;
+  public static final int VAR = 41;
   public static final int MAS = 28;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -91,6 +93,8 @@ public class sym {
   "POTENCIA",
   "DOBLEMAS",
   "DOBLEMENOS",
+  "IF",
+  "ELSE",
   "CADENA",
   "CARACTER",
   "PRINTLN",

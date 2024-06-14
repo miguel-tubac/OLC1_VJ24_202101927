@@ -17,6 +17,7 @@ import Instrucciones.DeclaracionVariablesConExpresion;
 import Instrucciones.Asignacion;
 import Instrucciones.Casteos;
 import Instrucciones.IncrementoDecremento;
+import Instrucciones.SentenciasIF;
 
 //expresiones
 import Expresiones.Nativo;
@@ -70,6 +71,7 @@ terminal String DOBLEIGUAL, DIFERENCIA, MENORIGUAL, MAYORIGUAL;
 terminal String OR, AND, XOR, NOT;
 terminal String MAS, MENOS, POR, DIV, MODULO, POTENCIA;
 terminal String DOBLEMAS, DOBLEMENOS;
+terminal String IF, ELSE;
 terminal CADENA, CARACTER;
 terminal PRINTLN;
 terminal VAR, CONST;
@@ -87,6 +89,7 @@ non terminal OperadoresVariables tipo;
 non terminal TipoDato mutabilidad;
 non terminal Instruccion casteos;
 non terminal Instruccion incremento;
+non terminal Instruccion sentecia_if, sentencia_elseif, lista_objetos;
 
 
 //------> PRECEDENCIA
@@ -119,6 +122,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | variables:var              {: RESULT = var; :}
     | asignacion:var             {: RESULT = var; :}
     | incremento:var             {: RESULT = var; :}
+    | sentecia_if:var            {: RESULT = var; :}
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -149,6 +153,18 @@ imprimir ::= PRINTLN PARENTESIS_A expresion:var PARENTESIS_C PUNTOYCOMA {: RESUL
 
 incremento ::= ID:a DOBLEMAS:b PUNTOYCOMA     {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
     | ID:a DOBLEMENOS:b PUNTOYCOMA            {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
+;
+
+sentecia_if ::= IF PARENTESIS_A expresion:a PARENTESIS_C lista_objetos sentencia_elseif:c //{: RESULT = new SentenciasIF(a,b,c, aleft, aright); :}
+;
+
+sentencia_elseif ::= ELSE lista_objetos
+    | ELSE sentecia_if
+    |      {: RESULT = null; :}
+;
+
+lista_objetos ::= LLAVE_A lista_instrucciones LLAVE_C
+    | LLAVE_A LLAVE_C
 ;
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}

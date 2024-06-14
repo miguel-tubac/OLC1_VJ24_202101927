@@ -87,6 +87,8 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> "bool"          { return new Symbol(sym.BOOL, yyline,yycolumn, yytext());}
 <YYINITIAL> "char"          { return new Symbol(sym.CHAR, yyline, yycolumn,yytext());}
 <YYINITIAL> "String"        { return new Symbol(sym.STRING, yyline, yycolumn,yytext());}
+<YYINITIAL> "if"            { return new Symbol(sym.IF, yyline, yycolumn,yytext());}
+<YYINITIAL> "else"          { return new Symbol(sym.ELSE, yyline, yycolumn,yytext());}
 
 //------> Operadores
 

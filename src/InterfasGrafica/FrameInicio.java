@@ -306,7 +306,7 @@ public class FrameInicio extends javax.swing.JFrame {
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
             
-            //  /* //------------------------------------------------------------------------------- Aqui 2
+             //     /* //------------------------------------------------------------------------------- Aqui 2
             try{
                 //System.out.println(texto);
                 lista.clear();
@@ -318,7 +318,7 @@ public class FrameInicio extends javax.swing.JFrame {
                 var tabla = new TablaSimbolos();
                 tabla.setNombre("GLOBAL");
                 ast.setConsola("");
-                //System.out.println(ast.getInstrucciones());//linea para depurar objetos
+                System.out.println(ast.getInstrucciones());//linea para depurar objetos
                 for (var a : ast.getInstrucciones()) {
                     if (a == null) {
                         continue;

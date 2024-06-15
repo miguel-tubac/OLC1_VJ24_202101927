@@ -28,6 +28,7 @@ public class sym {
   public static final int CORCHETE_A = 18;
   public static final int LLAVE_C = 6;
   public static final int LLAVE_A = 5;
+  public static final int MATCH = 52;
   public static final int NOT = 27;
   public static final int MENORIGUAL = 22;
   public static final int AND = 25;
@@ -49,9 +50,11 @@ public class sym {
   public static final int MODULO = 32;
   public static final int MENOS = 29;
   public static final int MENOR = 16;
+  public static final int BAJO = 53;
   public static final int BREAK = 48;
   public static final int MAYOR = 17;
   public static final int POTENCIA = 33;
+  public static final int DATOSMATCH = 51;
   public static final int ELSE = 37;
   public static final int PARENTESIS_C = 15;
   public static final int PARENTESIS_A = 14;
@@ -110,7 +113,10 @@ public class sym {
   "STRING",
   "BREAK",
   "CONTINUE",
-  "RETURN"
+  "RETURN",
+  "DATOSMATCH",
+  "MATCH",
+  "BAJO"
   };
 }
 

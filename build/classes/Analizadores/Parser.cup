@@ -21,6 +21,8 @@ import Instrucciones.SentenciasIF;
 import Instrucciones.BloqueSentencia;
 import Instrucciones.Break;
 import Instrucciones.Continue;
+import Instrucciones.Match;
+import Instrucciones.Casos;
 
 //expresiones
 import Expresiones.Nativo;
@@ -80,6 +82,7 @@ terminal PRINTLN;
 terminal VAR, CONST;
 terminal INT, DOUBLE, BOOL, CHAR, STRING;
 terminal String BREAK, CONTINUE, RETURN;
+terminal String DATOSMATCH, MATCH, BAJO;
 
 
 
@@ -95,6 +98,8 @@ non terminal Instruccion casteos;
 non terminal Instruccion incremento;
 non terminal Instruccion sentecia_if, sentencia_elseif, sentencia_bloque; 
 non terminal Instruccion sentenciasTransferencia;
+non terminal Instruccion match_funcion, match_default, casos;
+non terminal LinkedList<Instruccion> match_lista, match_inicio;
 
 
 //------> PRECEDENCIA
@@ -129,6 +134,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | incremento:var             {: RESULT = var; :}
     | sentecia_if:var            {: RESULT = var; :}
     | sentenciasTransferencia:var {: RESULT = var; :}
+    | match_funcion:var          {: RESULT = var; :}
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -176,7 +182,27 @@ sentenciasTransferencia ::= RETURN expresion PUNTOYCOMA
     | RETURN  PUNTOYCOMA                                    
     | BREAK:a PUNTOYCOMA                                       {: RESULT = new Break(aleft, aright); :}
     | CONTINUE:a PUNTOYCOMA                                    {: RESULT = new Continue(aleft, aright); :}
-    ;
+;
+
+match_funcion ::= MATCH expresion:a LLAVE_A match_inicio:b match_default:c LLAVE_C  {: RESULT = new Match(a, b, c, aleft, aright); :} 
+;
+
+match_inicio ::= match_lista:a   {: RESULT = a; :}
+    |                            {: RESULT = null; :}                       
+;
+
+match_lista ::= match_lista:a casos:b      {: RESULT = a; RESULT.add(b); :}            
+    | casos:a                            {: RESULT = new LinkedList<>(); RESULT.add(a); :}
+;
+
+casos ::= expresion:a DATOSMATCH LLAVE_A lista_instrucciones:b LLAVE_C     {: RESULT = new Casos(a, b, aleft, aright); :}
+;
+
+match_default ::= BAJO DATOSMATCH LLAVE_A lista_instrucciones:a LLAVE_C     {: RESULT = new BloqueSentencia(a, aleft, aright); :}        
+    |                                                                       {: RESULT = null; :}                                
+;
+
+
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}
     | ENTERO:val                                                 {: RESULT = new Nativo(Integer.parseInt(val), new Tipo(TipoDato.ENTERO), valleft, valright ); :}

@@ -53,6 +53,7 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> ")"       { return new Symbol(sym.PARENTESIS_C, yyline, yycolumn, yytext());}
 <YYINITIAL> ";"       { return new Symbol(sym.PUNTOYCOMA, yyline, yycolumn, yytext());}
 <YYINITIAL> "="       { return new Symbol(sym.IGUAL, yyline,yycolumn, yytext());}
+<YYINITIAL> "=>"      { return new Symbol(sym.DATOSMATCH, yyline,yycolumn, yytext());}
 <YYINITIAL> "=="      { return new Symbol(sym.DOBLEIGUAL, yyline, yycolumn, yytext());}
 <YYINITIAL> "!="      { return new Symbol(sym.DIFERENCIA, yyline, yycolumn, yytext());}
 <YYINITIAL> "<"       { return new Symbol(sym.MENOR, yyline, yycolumn, yytext());}
@@ -75,6 +76,7 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> "&&"      { return new Symbol(sym.AND, yyline,yycolumn, yytext());}
 <YYINITIAL> "^"       { return new Symbol(sym.XOR, yyline, yycolumn,yytext());}
 <YYINITIAL> "!"       { return new Symbol(sym.NOT, yyline,yycolumn, yytext());}
+<YYINITIAL> "_"       { return new Symbol(sym.BAJO, yyline,yycolumn, yytext());}
 
 //------> Instrucciones
 <YYINITIAL> "println"       { return new Symbol(sym.PRINTLN, yyline, yycolumn, yytext());}
@@ -92,6 +94,7 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> "break"         { return new Symbol(sym.BREAK, yyline, yycolumn,yytext());}
 <YYINITIAL> "continue"      { return new Symbol(sym.CONTINUE, yyline, yycolumn,yytext());}
 <YYINITIAL> "return"        { return new Symbol(sym.RETURN, yyline, yycolumn,yytext());}
+<YYINITIAL> "match"         { return new Symbol(sym.MATCH, yyline, yycolumn,yytext());}
 
 //------> Operadores
 

@@ -27,6 +27,7 @@ public class sym {
   public static final int PRINTLN = 40;
   public static final int CORCHETE_A = 18;
   public static final int LLAVE_C = 6;
+  public static final int FOR = 55;
   public static final int LLAVE_A = 5;
   public static final int MATCH = 52;
   public static final int NOT = 27;
@@ -118,7 +119,8 @@ public class sym {
   "DATOSMATCH",
   "MATCH",
   "BAJO",
-  "WHILE"
+  "WHILE",
+  "FOR"
   };
 }
 

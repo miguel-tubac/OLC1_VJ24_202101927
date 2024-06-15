@@ -24,6 +24,7 @@ import Instrucciones.Continue;
 import Instrucciones.Match;
 import Instrucciones.Casos;
 import Instrucciones.Whiles;
+import Instrucciones.For;
 
 //expresiones
 import Expresiones.Nativo;
@@ -84,7 +85,7 @@ terminal VAR, CONST;
 terminal INT, DOUBLE, BOOL, CHAR, STRING;
 terminal String BREAK, CONTINUE, RETURN;
 terminal String DATOSMATCH, MATCH, BAJO;
-terminal String WHILE, FOR;
+terminal WHILE, FOR;
 
 
 
@@ -98,11 +99,11 @@ non terminal OperadoresVariables tipo;
 non terminal TipoDato mutabilidad;
 non terminal Instruccion casteos;
 non terminal Instruccion incremento;
-non terminal Instruccion sentecia_if, sentencia_elseif, sentencia_bloque; 
+non terminal Instruccion sentecia_if, sentencia_bloque, sentencia_elseif; 
 non terminal Instruccion sentenciasTransferencia;
 non terminal Instruccion match_funcion, match_default, casos;
 non terminal LinkedList<Instruccion> match_lista, match_inicio;
-non terminal Instruccion while_funcion;
+non terminal Instruccion while_funcion, funcion_for, actualizar_for;
 
 
 //------> PRECEDENCIA
@@ -139,6 +140,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | sentenciasTransferencia:var {: RESULT = var; :}
     | match_funcion:var          {: RESULT = var; :}
     | while_funcion:var          {: RESULT = var; :}
+    | funcion_for:var            {: RESULT = var; :}
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -182,9 +184,7 @@ sentencia_elseif ::= ELSE sentencia_bloque:a    {: RESULT = a; :}
 sentencia_bloque ::= LLAVE_A lista_instrucciones:a LLAVE_C  {: RESULT = new BloqueSentencia(a, aleft, aright); :}
 ;
 
-sentenciasTransferencia ::= RETURN expresion PUNTOYCOMA    
-    | RETURN  PUNTOYCOMA                                    
-    | BREAK:a PUNTOYCOMA                                       {: RESULT = new Break(aleft, aright); :}
+sentenciasTransferencia ::= BREAK:a PUNTOYCOMA                 {: RESULT = new Break(aleft, aright); :}
     | CONTINUE:a PUNTOYCOMA                                    {: RESULT = new Continue(aleft, aright); :}
 ;
 
@@ -214,7 +214,8 @@ funcion_for ::= FOR PARENTESIS_A  asignacion:a expresion:b PUNTOYCOMA actualizar
 ;
 
 actualizar_for ::= ID:a IGUAL expresion:b {: RESULT = new Asignacion(a, b, aleft, aright);  :}
-    | incremento:a            {: RESULT = a; :}
+    | ID:a DOBLEMAS:b                {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
+    | ID:a DOBLEMENOS:b              {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
 ;
 
 

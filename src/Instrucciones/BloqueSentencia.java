@@ -16,28 +16,36 @@ public class BloqueSentencia extends Instruccion {
 
     @Override
     public Object interpretar(Arbol arbol, TablaSimbolos tabla) {
-        var newTabla = new TablaSimbolos(tabla);
         LinkedList<Errores> errores = new LinkedList<>();
-
+        
         for (var instruccion : this.instrucciones) {
             if (instruccion instanceof Continue){
-                System.out.println("Aqui2");
+                System.out.println("Aqui1");
                 continue;
             }
-            var resultado = instruccion.interpretar(arbol, newTabla);
+            if (instruccion instanceof Break){
+                System.out.println("Aqui2");
+                
+                this.tipo.setTipo(TipoDato.BREAK);
+                
+                return new Tipo(TipoDato.BREAK);
+            }
+            var resultado = instruccion.interpretar(arbol, tabla);
+            /*
             if (instruccion instanceof Continue) {//aqui ay que comparar dos cosas el for tambien
                 //System.out.println("Aqui1");
                 continue; // Saltar a la siguiente iteración si es una instrucción Continue
             }
             //System.out.println("Afuera");
-            
+            */
             
             
             // Manejo de errores dentro del nuevo entorno
+            /*
             if (resultado instanceof Errores) {
                 errores.add((Errores) resultado);
                 arbol.setErrores(errores);
-            }
+            }*/
         }
 
         return null;

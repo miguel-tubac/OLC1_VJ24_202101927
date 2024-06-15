@@ -4,6 +4,7 @@ package Instrucciones;
 import Abstracto.Instruccion;
 import Excepciones.Errores;
 import Simbolo.*;
+import java.util.LinkedList;
 
 public class SentenciasIF extends Instruccion {
     private Instruccion condicion;
@@ -29,12 +30,28 @@ public class SentenciasIF extends Instruccion {
         if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO) {
             return new Errores("SEMANTICO", "Expresion invalida para condicion IF",this.linea, this.col);
         }
-        
+         
         if ((boolean) cond) {
-            return this.bloque.interpretar(arbol, newTabla);
+            var respuesta = this.bloque.interpretar(arbol, newTabla);
+            if (respuesta instanceof Errores){
+                return respuesta;
+            }
+            System.out.println("IF: "+ this.bloque.tipo.getTipo());
+            if(this.bloque.tipo.getTipo() == TipoDato.BREAK){
+                this.tipo.setTipo(TipoDato.BREAK);
+            }
+            return new Tipo(TipoDato.BREAK);
         }
         else if(this.condicionelseif != null){
-            return this.condicionelseif.interpretar(arbol, newTabla);
+            var respuesta = this.condicionelseif.interpretar(arbol, newTabla);
+            if (respuesta instanceof Errores){
+                return respuesta;
+            }
+            System.out.println("else IF: "+ this.condicionelseif.tipo.getTipo());
+            if(this.condicionelseif.tipo.getTipo() == TipoDato.BREAK){
+                this.tipo.setTipo(TipoDato.BREAK);
+            }
+            return new Tipo(TipoDato.BREAK);
         }
         
         return null;

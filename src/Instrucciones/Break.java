@@ -11,7 +11,7 @@ public class Break extends Instruccion {
 
     @Override
     public Object interpretar(Arbol arbol, TablaSimbolos tabla) {
-        this.tipo.setTipo(TipoDato.BREAK);
+        //System.out.println("En el break");
         return null;
     }
     

@@ -10,9 +10,9 @@ public class For extends Instruccion {
     private Instruccion asignacion;
     private Instruccion condicion;
     private Instruccion actualizacion;
-    private Instruccion instrucciones;
+    private LinkedList<Instruccion> instrucciones;
 
-    public For(Instruccion asignacion, Instruccion condicion, Instruccion actualizacion, Instruccion instrucciones, int linea, int col) {
+    public For(Instruccion asignacion, Instruccion condicion, Instruccion actualizacion, LinkedList<Instruccion> instrucciones, int linea, int col) {
         super(new Tipo(TipoDato.VOID), linea, col);
         this.asignacion = asignacion;
         this.condicion = condicion;
@@ -46,18 +46,30 @@ public class For extends Instruccion {
             //nuevo entorno
             var newTabla2 = new TablaSimbolos(nuevaTabla);
 
- 
             //ejecutar instrucciones
-            var interpretar = this.instrucciones;
-            interpretar.interpretar(arbol, newTabla2);
-            System.out.println("Tipo interpretado: "+ interpretar.tipo.getTipo());
-            if (interpretar.tipo.getTipo() == TipoDato.BREAK){
-                return null;
+            for (var i : this.instrucciones) {
+                if (i instanceof Break) {
+                    //System.out.println("Break1");
+                    return null;
+                }
+                if (i instanceof Continue) {
+                    //System.out.println("continue1");
+                    break;
+                }
+                var resIns = i.interpretar(arbol, newTabla2);
+                //System.out.println("Valor res: "+resIns);
+                if (resIns == TipoDato.BREAK) {
+                    //System.out.println("Break2");
+                    return null;
+                }
+                if (resIns == TipoDato.CONTINUE) {
+                    //System.out.println("continue2");
+                    break;
+                }
             }
-            
-            //.interpretar(arbol, newTabla2);
-
+ 
             //actualizar la variable
+            
             var act = this.actualizacion.interpretar(arbol, nuevaTabla);
             if (act instanceof Errores) {
                 return act;

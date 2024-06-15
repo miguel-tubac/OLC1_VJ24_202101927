@@ -8,12 +8,12 @@ import java.util.LinkedList;
 
 public class Whiles extends Instruccion {
     private Instruccion condicion;
-    private Instruccion bloque;
+    private LinkedList<Instruccion> instrucciones;
     
-    public Whiles(Instruccion condicion, Instruccion bloque, int linea, int col) {
+    public Whiles(Instruccion condicion, LinkedList<Instruccion> instrucciones, int linea, int col) {
         super(new Tipo(TipoDato.VOID), linea, col);
         this.condicion = condicion;
-        this.bloque = bloque;
+        this.instrucciones = instrucciones;
     }
 
     @Override
@@ -30,17 +30,26 @@ public class Whiles extends Instruccion {
         var newTabla = new TablaSimbolos(tabla);
         
         while((boolean) cond){
-            var cuerpo = this.bloque.interpretar(arbol, newTabla);
-            if (cuerpo instanceof Errores){
-                return cuerpo;
-            }
-            //Se valida el break
-            if(cuerpo instanceof Break){
-                break;
-            }
-            // se valida el continue
-            if(cuerpo instanceof Continue){
-                continue;
+            //ejecutar instrucciones
+            for (var i : this.instrucciones) {
+                if (i instanceof Break) {
+                    //System.out.println("Break1");
+                    return null;
+                }
+                if (i instanceof Continue) {
+                    //System.out.println("continue1");
+                    break;
+                }
+                var resIns = i.interpretar(arbol, newTabla);
+                //System.out.println("Valor res: "+resIns);
+                if (resIns == TipoDato.BREAK) {
+                    //System.out.println("Break2");
+                    return null;
+                }
+                if (resIns == TipoDato.CONTINUE) {
+                    //System.out.println("continue2");
+                    break;
+                }
             }
             
             cond = this.condicion.interpretar(arbol, newTabla);

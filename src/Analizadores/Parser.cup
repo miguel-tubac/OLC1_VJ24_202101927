@@ -206,11 +206,11 @@ match_default ::= BAJO DATOSMATCH LLAVE_A lista_instrucciones:a LLAVE_C     {: R
     |                                                                       {: RESULT = null; :}                                
 ;
 
-while_funcion ::= WHILE PARENTESIS_A expresion:a PARENTESIS_C sentencia_bloque:b   {: RESULT = new Whiles(a, b, aleft, aright); :} 
+while_funcion ::= WHILE PARENTESIS_A expresion:a PARENTESIS_C LLAVE_A lista_instrucciones:b LLAVE_C   {: RESULT = new Whiles(a, b, aleft, aright); :} 
 ;
 
 
-funcion_for ::= FOR PARENTESIS_A  asignacion:a expresion:b PUNTOYCOMA actualizar_for:c PARENTESIS_C sentencia_bloque:d  {:   RESULT = new For(a, b, c, d, aleft, aright);   :}
+funcion_for ::= FOR PARENTESIS_A  asignacion:a expresion:b PUNTOYCOMA actualizar_for:c PARENTESIS_C LLAVE_A lista_instrucciones:d LLAVE_C  {:   RESULT = new For(a, b, c, d, aleft, aright);   :}
 ;
 
 actualizar_for ::= ID:a IGUAL expresion:b {: RESULT = new Asignacion(a, b, aleft, aright);  :}

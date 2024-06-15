@@ -36,22 +36,28 @@ public class SentenciasIF extends Instruccion {
             if (respuesta instanceof Errores){
                 return respuesta;
             }
-            System.out.println("IF: "+ this.bloque.tipo.getTipo());
-            if(this.bloque.tipo.getTipo() == TipoDato.BREAK){
+            if(respuesta == TipoDato.BREAK){
                 this.tipo.setTipo(TipoDato.BREAK);
+                return this.tipo.getTipo();
             }
-            return new Tipo(TipoDato.BREAK);
+            if(respuesta == TipoDato.CONTINUE){
+                this.tipo.setTipo(TipoDato.CONTINUE);
+                return this.tipo.getTipo();
+            }
         }
         else if(this.condicionelseif != null){
             var respuesta = this.condicionelseif.interpretar(arbol, newTabla);
             if (respuesta instanceof Errores){
                 return respuesta;
             }
-            System.out.println("else IF: "+ this.condicionelseif.tipo.getTipo());
-            if(this.condicionelseif.tipo.getTipo() == TipoDato.BREAK){
+            if(respuesta == TipoDato.BREAK){
                 this.tipo.setTipo(TipoDato.BREAK);
+                return this.tipo.getTipo();
             }
-            return new Tipo(TipoDato.BREAK);
+            if(respuesta == TipoDato.CONTINUE){
+                this.tipo.setTipo(TipoDato.CONTINUE);
+                return this.tipo.getTipo();
+            }
         }
         
         return null;

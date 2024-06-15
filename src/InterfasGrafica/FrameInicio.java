@@ -306,7 +306,7 @@ public class FrameInicio extends javax.swing.JFrame {
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
             
-             //     /* //------------------------------------------------------------------------------- Aqui 2
+            //      /* //------------------------------------------------------------------------------- Aqui 2
             try{
                 //System.out.println(texto);
                 lista.clear();

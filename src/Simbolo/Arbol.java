@@ -53,4 +53,14 @@ public class Arbol {
     public void Print(String valor) {
         this.consola += valor + "\n";
     }
+    
+    public boolean agregarSimboloGlobal(Simbolo simbolo) {
+        if (this.tablaGlobal.addSimbolo(simbolo)) {
+            return true;
+        } else {
+            //this.errores.add(new Errores("SEMANTICO", "El símbolo con id " + simbolo.getId() + " ya existe en la tabla global.", 0, 0));
+            return false;
+        }
+    }
+    
 }

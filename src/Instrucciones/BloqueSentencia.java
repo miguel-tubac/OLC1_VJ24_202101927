@@ -16,19 +16,18 @@ public class BloqueSentencia extends Instruccion {
 
     @Override
     public Object interpretar(Arbol arbol, TablaSimbolos tabla) {
-        LinkedList<Errores> errores = new LinkedList<>();
-        
+        //LinkedList<Errores> errores = new LinkedList<>();
+        //var newTabla = new TablaSimbolos(tabla.getTablaAnterior());
         for (var instruccion : this.instrucciones) {
             if (instruccion instanceof Continue){
                 System.out.println("Aqui1");
-                continue;
+                this.tipo.setTipo(TipoDato.CONTINUE);
+                return this.tipo.getTipo();
             }
             if (instruccion instanceof Break){
                 System.out.println("Aqui2");
-                
                 this.tipo.setTipo(TipoDato.BREAK);
-                
-                return new Tipo(TipoDato.BREAK);
+                return this.tipo.getTipo();
             }
             var resultado = instruccion.interpretar(arbol, tabla);
             /*
@@ -49,6 +48,38 @@ public class BloqueSentencia extends Instruccion {
         }
 
         return null;
+    }
+
+    public LinkedList<Instruccion> getInstrucciones() {
+        return instrucciones;
+    }
+
+    public void setInstrucciones(LinkedList<Instruccion> instrucciones) {
+        this.instrucciones = instrucciones;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getLinea() {
+        return linea;
+    }
+
+    public void setLinea(int linea) {
+        this.linea = linea;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
     
 }

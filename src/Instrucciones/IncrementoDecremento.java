@@ -25,7 +25,7 @@ public class IncrementoDecremento extends Instruccion {
         
         
         //validamos si es de tipo int o double
-        System.out.println("Tipo: "+ variable.getTipo().getTipo());
+        //System.out.println("Tipo: "+ variable.getTipo().getTipo());
         if(variable.getTipo().getTipo() == TipoDato.CONST){
             return new Errores("Semantico", "La Variable " + this.id + " es de tipo CONST y no puede Incrementar o Decrementar", this.linea, this.col);
         }

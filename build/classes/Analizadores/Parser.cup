@@ -23,6 +23,7 @@ import Instrucciones.Break;
 import Instrucciones.Continue;
 import Instrucciones.Match;
 import Instrucciones.Casos;
+import Instrucciones.Whiles;
 
 //expresiones
 import Expresiones.Nativo;
@@ -83,6 +84,7 @@ terminal VAR, CONST;
 terminal INT, DOUBLE, BOOL, CHAR, STRING;
 terminal String BREAK, CONTINUE, RETURN;
 terminal String DATOSMATCH, MATCH, BAJO;
+terminal String WHILE, FOR;
 
 
 
@@ -100,6 +102,7 @@ non terminal Instruccion sentecia_if, sentencia_elseif, sentencia_bloque;
 non terminal Instruccion sentenciasTransferencia;
 non terminal Instruccion match_funcion, match_default, casos;
 non terminal LinkedList<Instruccion> match_lista, match_inicio;
+non terminal Instruccion while_funcion;
 
 
 //------> PRECEDENCIA
@@ -135,6 +138,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | sentecia_if:var            {: RESULT = var; :}
     | sentenciasTransferencia:var {: RESULT = var; :}
     | match_funcion:var          {: RESULT = var; :}
+    | while_funcion:var          {: RESULT = var; :}
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -202,6 +206,16 @@ match_default ::= BAJO DATOSMATCH LLAVE_A lista_instrucciones:a LLAVE_C     {: R
     |                                                                       {: RESULT = null; :}                                
 ;
 
+while_funcion ::= WHILE PARENTESIS_A expresion:a PARENTESIS_C sentencia_bloque:b   {: RESULT = new Whiles(a, b, aleft, aright); :} 
+;
+
+
+funcion_for ::= FOR PARENTESIS_A  asignacion:a expresion:b PUNTOYCOMA actualizar_for:c PARENTESIS_C sentencia_bloque:d  {:   RESULT = new For(a, b, c, d, aleft, aright);   :}
+;
+
+actualizar_for ::= ID:a IGUAL expresion:b {: RESULT = new Asignacion(a, b, aleft, aright);  :}
+    | incremento:a            {: RESULT = a; :}
+;
 
 
 expresion ::= NUMERODECIMAL:val                                  {: RESULT = new Nativo(new Double(val), new Tipo(TipoDato.DECIMAL), valleft, valright ); :}

@@ -95,6 +95,7 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 <YYINITIAL> "continue"      { return new Symbol(sym.CONTINUE, yyline, yycolumn,yytext());}
 <YYINITIAL> "return"        { return new Symbol(sym.RETURN, yyline, yycolumn,yytext());}
 <YYINITIAL> "match"         { return new Symbol(sym.MATCH, yyline, yycolumn,yytext());}
+<YYINITIAL> "while"         { return new Symbol(sym.WHILE, yyline, yycolumn,yytext());}
 
 //------> Operadores
 

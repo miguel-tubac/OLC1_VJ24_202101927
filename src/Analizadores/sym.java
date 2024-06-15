@@ -57,6 +57,7 @@ public class sym {
   public static final int DATOSMATCH = 51;
   public static final int ELSE = 37;
   public static final int PARENTESIS_C = 15;
+  public static final int WHILE = 54;
   public static final int PARENTESIS_A = 14;
   public static final int STRING = 47;
   public static final int FALSE = 4;
@@ -116,7 +117,8 @@ public class sym {
   "RETURN",
   "DATOSMATCH",
   "MATCH",
-  "BAJO"
+  "BAJO",
+  "WHILE"
   };
 }
 

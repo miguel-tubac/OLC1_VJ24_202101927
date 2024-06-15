@@ -301,12 +301,12 @@ public class FrameInicio extends javax.swing.JFrame {
             //Comente la llamada a la funcion ya que solo se debe de ejecutar una ves, para que genere los archivos .java en 
             //el paquete analizador
             
-            //   analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
+              analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
             
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
             
-            //     /* //------------------------------------------------------------------------------- Aqui 2
+                 /* //------------------------------------------------------------------------------- Aqui 2
             try{
                 //System.out.println(texto);
                 lista.clear();

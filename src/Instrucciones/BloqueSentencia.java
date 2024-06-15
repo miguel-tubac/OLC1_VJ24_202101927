@@ -20,6 +20,10 @@ public class BloqueSentencia extends Instruccion {
         LinkedList<Errores> errores = new LinkedList<>();
 
         for (var instruccion : this.instrucciones) {
+            if (instruccion instanceof Continue){
+                System.out.println("Aqui2");
+                continue;
+            }
             var resultado = instruccion.interpretar(arbol, newTabla);
             if (instruccion instanceof Continue) {//aqui ay que comparar dos cosas el for tambien
                 //System.out.println("Aqui1");
@@ -27,10 +31,7 @@ public class BloqueSentencia extends Instruccion {
             }
             //System.out.println("Afuera");
             
-            if (resultado  instanceof Continue){
-                //System.out.println("Aqui2");
-                continue;
-            }
+            
             
             // Manejo de errores dentro del nuevo entorno
             if (resultado instanceof Errores) {

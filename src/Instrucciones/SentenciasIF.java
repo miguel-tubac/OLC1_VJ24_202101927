@@ -24,17 +24,17 @@ public class SentenciasIF extends Instruccion {
         if (cond instanceof Errores) {
             return cond;
         }
-        
+        var newTabla = new TablaSimbolos(tabla);
         // ver que cond sea booleano
         if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO) {
             return new Errores("SEMANTICO", "Expresion invalida para condicion IF",this.linea, this.col);
         }
         
         if ((boolean) cond) {
-            return this.bloque.interpretar(arbol, tabla);
+            return this.bloque.interpretar(arbol, newTabla);
         }
         else if(this.condicionelseif != null){
-            return this.condicionelseif.interpretar(arbol, tabla);
+            return this.condicionelseif.interpretar(arbol, newTabla);
         }
         
         return null;

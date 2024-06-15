@@ -25,6 +25,7 @@ import Instrucciones.Match;
 import Instrucciones.Casos;
 import Instrucciones.Whiles;
 import Instrucciones.For;
+import Instrucciones.DoWhile;
 
 //expresiones
 import Expresiones.Nativo;
@@ -85,7 +86,7 @@ terminal VAR, CONST;
 terminal INT, DOUBLE, BOOL, CHAR, STRING;
 terminal String BREAK, CONTINUE, RETURN;
 terminal String DATOSMATCH, MATCH, BAJO;
-terminal WHILE, FOR;
+terminal WHILE, FOR, DO;
 
 
 
@@ -103,7 +104,7 @@ non terminal Instruccion sentecia_if, sentencia_bloque, sentencia_elseif;
 non terminal Instruccion sentenciasTransferencia;
 non terminal Instruccion match_funcion, match_default, casos;
 non terminal LinkedList<Instruccion> match_lista, match_inicio;
-non terminal Instruccion while_funcion, funcion_for, actualizar_for;
+non terminal Instruccion while_funcion, funcion_for, actualizar_for, funcion_dowhile ;
 
 
 //------> PRECEDENCIA
@@ -141,6 +142,7 @@ instruccion ::= imprimir:var     {: RESULT = var; :}
     | match_funcion:var          {: RESULT = var; :}
     | while_funcion:var          {: RESULT = var; :}
     | funcion_for:var            {: RESULT = var; :}
+    | funcion_dowhile:var        {: RESULT = var; :}       
     | error PUNTOYCOMA
     | error LLAVE_C
 ;
@@ -216,6 +218,10 @@ funcion_for ::= FOR PARENTESIS_A  asignacion:a expresion:b PUNTOYCOMA actualizar
 actualizar_for ::= ID:a IGUAL expresion:b {: RESULT = new Asignacion(a, b, aleft, aright);  :}
     | ID:a DOBLEMAS:b                {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
     | ID:a DOBLEMENOS:b              {: RESULT = new IncrementoDecremento(a, b, aleft, aright); :}
+;
+
+
+funcion_dowhile ::= DO LLAVE_A lista_instrucciones:a LLAVE_C WHILE PARENTESIS_A expresion:b PARENTESIS_C PUNTOYCOMA {: RESULT = new DoWhile(a,b, aleft, aright); :}
 ;
 
 

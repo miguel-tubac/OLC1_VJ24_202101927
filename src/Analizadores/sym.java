@@ -63,6 +63,7 @@ public class sym {
   public static final int STRING = 47;
   public static final int FALSE = 4;
   public static final int VAR = 41;
+  public static final int DO = 56;
   public static final int MAS = 28;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -120,7 +121,8 @@ public class sym {
   "MATCH",
   "BAJO",
   "WHILE",
-  "FOR"
+  "FOR",
+  "DO"
   };
 }
 

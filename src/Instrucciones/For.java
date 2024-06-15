@@ -41,7 +41,7 @@ public class For extends Instruccion {
         }
         
         //System.out.println("Aqui afuera"+ this.condicion.interpretar(arbol, nuevaTabla));
-        while (!(boolean) this.condicion.interpretar(arbol, nuevaTabla)) {
+        while ((boolean) this.condicion.interpretar(arbol, nuevaTabla)) {
             //System.out.println("Aqui adentro");
             //nuevo entorno
             var newTabla2 = new TablaSimbolos(nuevaTabla);

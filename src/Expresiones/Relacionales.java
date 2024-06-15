@@ -64,17 +64,17 @@ public class Relacionales extends Instruccion{
                     //entero == entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 == (int) op2;
+                        return ((Number) op1).intValue() == ((Number) op2).intValue();
                     }
                     //entero == decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 == (double) op2;
+                        return ((Number) op1).intValue() == ((Number) op2).doubleValue();
                     }
                     //entero == caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 ==  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() ==  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -88,17 +88,18 @@ public class Relacionales extends Instruccion{
                     // decima == entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 == (int) op2;
+                        //System.out.println("Aqui");
+                        return ((Number) op1).doubleValue() == ((Number) op2).intValue();
                     }
                     // decimal == decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 == (double) op2;
+                        return ((Number) op1).doubleValue() == ((Number) op2).doubleValue();
                     }
                     //decimal == caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 == (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() == (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -126,12 +127,12 @@ public class Relacionales extends Instruccion{
                     // caracter == entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) == (int) op2;
+                        return (int)(op1.toString()).charAt(0) == ((Number) op2).intValue();
                     }
                     // caracter == decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) == (double) op2;
+                        return (int)(op1.toString()).charAt(0) == ((Number) op2).doubleValue();
                     }
                     // caracter == caracter = boolean
                     case TipoDato.CARACTER -> {
@@ -179,17 +180,17 @@ public class Relacionales extends Instruccion{
                     //entero != entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 != (int) op2;
+                        return ((Number) op1).intValue() != ((Number) op2).intValue();
                     }
                     //entero != decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 != (double) op2;
+                        return ((Number) op1).intValue() != ((Number) op2).doubleValue();
                     }
                     //entero != caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 !=  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() !=  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -203,17 +204,17 @@ public class Relacionales extends Instruccion{
                     // decima != entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 != (int) op2;
+                        return ((Number) op1).doubleValue() != ((Number) op2).intValue();
                     }
                     // decimal != decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 != (double) op2;
+                        return ((Number) op1).doubleValue() != ((Number) op2).doubleValue();
                     }
                     //decimal != caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 != (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() != (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -241,12 +242,12 @@ public class Relacionales extends Instruccion{
                     // caracter != entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) != (int) op2;
+                        return (int)(op1.toString()).charAt(0) != ((Number) op2).intValue();
                     }
                     // caracter != decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) != (double) op2;
+                        return (int)(op1.toString()).charAt(0) != ((Number) op2).doubleValue();
                     }
                     // caracter != caracter = boolean
                     case TipoDato.CARACTER -> {
@@ -295,17 +296,17 @@ public class Relacionales extends Instruccion{
                     //entero < entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 < (int) op2;
+                        return ((Number) op1).intValue() < ((Number) op2).intValue();
                     }
                     //entero < decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 < (double) op2;
+                        return ((Number) op1).intValue() < ((Number) op2).doubleValue();
                     }
                     //entero < caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 <  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() <  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -319,17 +320,17 @@ public class Relacionales extends Instruccion{
                     // decima < entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 < (int) op2;
+                        return ((Number) op1).doubleValue() < ((Number) op2).intValue();
                     }
                     // decimal < decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 < (double) op2;
+                        return ((Number) op1).doubleValue() < ((Number) op2).doubleValue();
                     }
                     //decimal < caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 < (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() < (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -357,12 +358,12 @@ public class Relacionales extends Instruccion{
                     // caracter < entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) < (int) op2;
+                        return (int)(op1.toString()).charAt(0) < ((Number) op2).intValue();
                     }
                     // caracter < decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) < (double) op2;
+                        return (int)(op1.toString()).charAt(0) < ((Number) op2).doubleValue();
                     }
                     // caracter < caracter = boolean
                     case TipoDato.CARACTER -> {
@@ -411,17 +412,17 @@ public class Relacionales extends Instruccion{
                     //entero <= entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 <= (int) op2;
+                        return ((Number) op1).intValue() <= ((Number) op2).intValue();
                     }
                     //entero <= decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 <= (double) op2;
+                        return ((Number) op1).intValue() <= ((Number) op2).doubleValue();
                     }
                     //entero <= caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 <=  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() <=  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -435,17 +436,17 @@ public class Relacionales extends Instruccion{
                     // decima <= entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 <= (int) op2;
+                        return ((Number) op1).doubleValue() <= ((Number) op2).intValue();
                     }
                     // decimal <= decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 <= (double) op2;
+                        return ((Number) op1).doubleValue() <= ((Number) op2).doubleValue();
                     }
                     //decimal <= caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 <= (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() <= (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -473,12 +474,12 @@ public class Relacionales extends Instruccion{
                     // caracter <= entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) <= (int) op2;
+                        return (int)(op1.toString()).charAt(0) <= ((Number) op2).intValue();
                     }
                     // caracter <= decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) <= (double) op2;
+                        return (int)(op1.toString()).charAt(0) <= ((Number) op2).doubleValue();
                     }
                     // caracter <= caracter = boolean
                     case TipoDato.CARACTER -> {
@@ -527,17 +528,17 @@ public class Relacionales extends Instruccion{
                     //entero > entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 > (int) op2;
+                        return ((Number) op1).intValue() > ((Number) op2).intValue();
                     }
                     //entero > decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 > (double) op2;
+                        return ((Number) op1).intValue() > ((Number) op2).doubleValue();
                     }
                     //entero > caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 >  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() >  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -551,17 +552,17 @@ public class Relacionales extends Instruccion{
                     // decima > entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 > (int) op2;
+                        return ((Number) op1).doubleValue() > ((Number) op2).intValue();
                     }
                     // decimal > decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 > (double) op2;
+                        return ((Number) op1).doubleValue() > ((Number) op2).doubleValue();
                     }
                     //decimal > caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 > (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() > (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -589,12 +590,12 @@ public class Relacionales extends Instruccion{
                     // caracter > entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) > (int) op2;
+                        return (int)(op1.toString()).charAt(0) > ((Number) op2).intValue();
                     }
                     // caracter > decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) > (double) op2;
+                        return (int)(op1.toString()).charAt(0) > ((Number) op2).doubleValue();
                     }
                     // caracter > caracter = boolean
                     case TipoDato.CARACTER -> {
@@ -643,17 +644,17 @@ public class Relacionales extends Instruccion{
                     //entero >= entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 >= (int) op2;
+                        return ((Number) op1).intValue() >= ((Number) op2).intValue();
                     }
                     //entero >= decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 >= (double) op2;
+                        return ((Number) op1).intValue() >= ((Number) op2).doubleValue();
                     }
                     //entero >= caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int) op1 >=  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() >=  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -667,17 +668,17 @@ public class Relacionales extends Instruccion{
                     // decima >= entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 >= (int) op2;
+                        return ((Number) op1).doubleValue() >= ((Number) op2).intValue();
                     }
                     // decimal >= decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 >= (double) op2;
+                        return ((Number) op1).doubleValue() >= ((Number) op2).doubleValue();
                     }
                     //decimal >= caracter = boolean
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (double) op1 >= (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() >= (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -705,12 +706,12 @@ public class Relacionales extends Instruccion{
                     // caracter >= entero = boolean
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) >= (int) op2;
+                        return (int)(op1.toString()).charAt(0) >= ((Number) op2).intValue();
                     }
                     // caracter >= decimal = boolean
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.BOOLEANO);
-                        return (int)(op1.toString()).charAt(0) >= (double) op2;
+                        return (int)(op1.toString()).charAt(0) >= ((Number) op2).doubleValue();
                     }
                     // caracter >= caracter = boolean
                     case TipoDato.CARACTER -> {

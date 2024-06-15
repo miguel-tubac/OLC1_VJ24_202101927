@@ -79,17 +79,17 @@ public class Aritmeticas extends Instruccion {
                     //entero + entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int) op1 + (int) op2;
+                        return ((Number) op1).intValue() + ((Number) op2).intValue();
                     }
                     //entero + decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 + (double) op2;
+                        return ((Number) op1).intValue() + ((Number) op2).doubleValue();
                     }
                     //entero + cadena = cadena
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int) op1 +  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() +  (int)(op2.toString()).charAt(0);
                     }
                     //entero + cadena = cadena
                     case TipoDato.CADENA -> {
@@ -108,17 +108,17 @@ public class Aritmeticas extends Instruccion {
                     // decima + entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 + (int) op2;
+                        return ((Number) op1).doubleValue() + ((Number) op2).intValue();
                     }
                     // decimal + decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 + (double) op2;
+                        return ((Number) op1).doubleValue() + ((Number) op2).doubleValue();
                     }
                     //decimal + caracter = decimal
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 +  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() +  (int)(op2.toString()).charAt(0);
                     }
                     //decimal + cadena = cadena
                     case TipoDato.CADENA -> {
@@ -229,17 +229,17 @@ public class Aritmeticas extends Instruccion {
                     //entero - entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int) op1 - (int) op2;
+                        return ((Number) op1).intValue() - ((Number) op2).intValue();
                     }
                     //entero - decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 - (double) op2;
+                        return ((Number) op1).intValue() - ((Number) op2).doubleValue();
                     }
                     //entero - caracter = entero
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int) op1 -  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() -  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -253,17 +253,17 @@ public class Aritmeticas extends Instruccion {
                     // decima - entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 - (int) op2;
+                        return ((Number) op1).intValue() - ((Number) op2).intValue();
                     }
                     // decimal - decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 - (double) op2;
+                        return ((Number) op1).doubleValue() - ((Number) op2).doubleValue();
                     }
                     //decimal - caracter = decimal
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 -  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() -  (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -277,12 +277,12 @@ public class Aritmeticas extends Instruccion {
                     // caracter - entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int)(op1.toString()).charAt(0) - (int) op2;
+                        return (int)(op1.toString()).charAt(0) - ((Number) op2).intValue();
                     }
                     // caracter - decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int)(op1.toString()).charAt(0) - (double) op2;
+                        return (int)(op1.toString()).charAt(0) - ((Number) op2).doubleValue();
                     }
                     //error de tipos
                     default -> {
@@ -311,17 +311,17 @@ public class Aritmeticas extends Instruccion {
                     //entero * entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int) op1 * (int) op2;
+                        return ((Number) op1).intValue() * ((Number) op2).intValue();
                     }
                     //entero * decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 * (double) op2;
+                        return ((Number) op1).intValue() * ((Number) op2).doubleValue();
                     }
                     //entero * caracter = entero
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int) op1 *  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).intValue() *  (int)(op2.toString()).charAt(0);
                     }
                     //Error
                     default -> {
@@ -335,17 +335,17 @@ public class Aritmeticas extends Instruccion {
                     // decima * entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 * (int) op2;
+                        return ((Number) op1).doubleValue() * ((Number) op2).intValue();
                     }
                     // decimal * decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 * (double) op2;
+                        return ((Number) op1).doubleValue() * ((Number) op2).doubleValue();
                     }
                     //decimal * caracter = decimal
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 *  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() *  (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -359,12 +359,12 @@ public class Aritmeticas extends Instruccion {
                     // caracter * entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return (int)(op1.toString()).charAt(0) * (int) op2;
+                        return (int)(op1.toString()).charAt(0) * ((Number) op2).intValue();
                     }
                     // caracter * decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int)(op1.toString()).charAt(0) * (double) op2;
+                        return (int)(op1.toString()).charAt(0) * ((Number) op2).doubleValue();
                     }
                     //error de tipos
                     default -> {
@@ -406,7 +406,7 @@ public class Aritmeticas extends Instruccion {
                     //entero / decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 / (double) op2;
+                        return ((Number) op1).intValue() / ((Number) op2).doubleValue();
                     }
                     //entero - caracter = entero
                     case TipoDato.CARACTER -> {
@@ -425,17 +425,17 @@ public class Aritmeticas extends Instruccion {
                     // decima / entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 / (int) op2;
+                        return ((Number) op1).doubleValue() / ((Number) op2).intValue();
                     }
                     // decimal / decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 / (double) op2;
+                        return ((Number) op1).doubleValue() / ((Number) op2).doubleValue();
                     }
                     //decimal / caracter = decimal
                     case TipoDato.CARACTER -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 /  (int)(op2.toString()).charAt(0);
+                        return ((Number) op1).doubleValue() /  (int)(op2.toString()).charAt(0);
                     }
                     //error de tipos
                     default -> {
@@ -454,7 +454,7 @@ public class Aritmeticas extends Instruccion {
                     // caracter / decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int)(op1.toString()).charAt(0) / (double) op2;
+                        return (int)(op1.toString()).charAt(0) / ((Number) op2).doubleValue();
                     }
                     //error de tipos
                     default -> {
@@ -483,12 +483,12 @@ public class Aritmeticas extends Instruccion {
                     //entero ** entero = entero
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.ENTERO);
-                        return Math.pow((int) op1, (int) op2);
+                        return Math.pow(((Number) op1).intValue(), ((Number) op2).intValue());
                     }
                     //entero ** decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return Math.pow((int) op1, (double) op2);
+                        return Math.pow(((Number) op1).intValue(), ((Number) op2).doubleValue());
                     }
                     //Error
                     default -> {
@@ -502,12 +502,12 @@ public class Aritmeticas extends Instruccion {
                     // decima ** entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return Math.pow((double) op1, (int) op2);
+                        return Math.pow(((Number) op1).doubleValue(), ((Number) op2).intValue());
                     }
                     // decimal - decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return Math.pow((double) op1, (double) op2);
+                        return Math.pow(((Number) op1).doubleValue(), ((Number) op2).doubleValue());
                     }
                     //error de tipos
                     default -> {
@@ -536,12 +536,12 @@ public class Aritmeticas extends Instruccion {
                     //entero % entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 % (int) op2;
+                        return ((Number) op1).intValue() % ((Number) op2).intValue();
                     }
                     //entero % decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (int) op1 % (double) op2;
+                        return ((Number) op1).intValue() % ((Number) op2).doubleValue();
                     }
                     //Error
                     default -> {
@@ -555,12 +555,12 @@ public class Aritmeticas extends Instruccion {
                     // decima % entero = decimal
                     case TipoDato.ENTERO -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 % (int) op2;
+                        return ((Number) op1).doubleValue() % ((Number) op2).intValue();
                     }
                     // decimal % decimal = decimal
                     case TipoDato.DECIMAL -> {
                         this.tipo.setTipo(TipoDato.DECIMAL);
-                        return (double) op1 % (double) op2;
+                        return ((Number) op1).doubleValue() % ((Number) op2).doubleValue();
                     }
                     //error de tipos
                     default -> {
@@ -582,11 +582,11 @@ public class Aritmeticas extends Instruccion {
         switch (opU) {
             case TipoDato.ENTERO -> {
                 this.tipo.setTipo(TipoDato.ENTERO);
-                return (int) op1 * -1;
+                return ((Number) op1).intValue() * -1;
             }
             case TipoDato.DECIMAL -> {
                 this.tipo.setTipo(TipoDato.DECIMAL);
-                return (double) op1 * -1;
+                return ((Number) op1).doubleValue() * -1;
             }
             default -> {
                 return new Errores("SEMANTICO", "Negacion erronea", this.linea, this.col);

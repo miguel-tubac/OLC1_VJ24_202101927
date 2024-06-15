@@ -40,10 +40,23 @@ public class Match extends Instruccion {
                 if (compa instanceof Errores){
                      return compa;
                 }
-                //Aca se interpreta la condicion que se cumple dentro del match
-                if(this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo() && compa == cond){
-                    casos.interpretar(arbol, newTabla);
-                    break;
+                if(this.condicion.tipo.getTipo() == TipoDato.CADENA && newcasos.getCondicion().tipo.getTipo() == TipoDato.CADENA || 
+                        this.condicion.tipo.getTipo() == TipoDato.CARACTER && newcasos.getCondicion().tipo.getTipo() == TipoDato.CARACTER ){
+                    if( compa.toString().equals(cond.toString())){
+                        casos.interpretar(arbol, newTabla);
+                        //System.out.println("Aquissssss");
+                        break;
+                    } 
+                }
+                else{
+                    //System.out.println("Cindi1: "+ (this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo()));
+                    //System.out.println("Condi2: "+ (compa == cond));
+                    //Aca se interpreta la condicion que se cumple dentro del match
+                    if(this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo() && compa == cond){
+                        casos.interpretar(arbol, newTabla);
+                        //System.out.println("Aquissssss");
+                        break;
+                    } 
                 }
             }
         }
@@ -60,18 +73,31 @@ public class Match extends Instruccion {
             boolean sientrocaso = false;
             for (var casos : this.instrucciones){
                 var newcasos = (Casos) casos;
-                //System.out.println("Expresion a comparar: "+ newcasos.getCondicion().interpretar(arbol, newTabla));
-                //System.out.println("Tipo Expresion a comparar: "+ newcasos.getCondicion().tipo.getTipo());
                 var compa = newcasos.getCondicion().interpretar(arbol, newTabla);
                 if (compa instanceof Errores){
                      return compa;
                 }
-                //Aca se interpreta la condicion que se cumple dentro del match
-                if(this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo() && compa == cond){
-                    casos.interpretar(arbol, newTabla);
-                    sientrocaso = true;
-                    break;
+                if(this.condicion.tipo.getTipo() == TipoDato.CADENA && newcasos.getCondicion().tipo.getTipo() == TipoDato.CADENA || 
+                        this.condicion.tipo.getTipo() == TipoDato.CARACTER && newcasos.getCondicion().tipo.getTipo() == TipoDato.CARACTER ){
+                    if( compa.toString().equals(cond.toString())){
+                        casos.interpretar(arbol, newTabla);
+                        sientrocaso = true;
+                        //System.out.println("Aquissssss");
+                        break;
+                    } 
                 }
+                else{
+                    //System.out.println("Cindi1: "+ (this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo()));
+                    //System.out.println("Condi2: "+ (compa == cond));
+                    //Aca se interpreta la condicion que se cumple dentro del match
+                    if(this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo() && compa == cond){
+                        casos.interpretar(arbol, newTabla);
+                        sientrocaso = true;
+                        //System.out.println("Aquissssss");
+                        break;
+                    } 
+                }
+                
             }
             if(sientrocaso == false){
                 var casofed = this.condicionDefault.interpretar(arbol, newTabla);

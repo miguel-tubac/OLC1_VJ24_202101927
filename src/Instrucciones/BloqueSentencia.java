@@ -20,12 +20,12 @@ public class BloqueSentencia extends Instruccion {
         //var newTabla = new TablaSimbolos(tabla.getTablaAnterior());
         for (var instruccion : this.instrucciones) {
             if (instruccion instanceof Continue){
-                System.out.println("Aqui1");
+                //System.out.println("Aqui1");
                 this.tipo.setTipo(TipoDato.CONTINUE);
                 return this.tipo.getTipo();
             }
             if (instruccion instanceof Break){
-                System.out.println("Aqui2");
+                //System.out.println("Aqui2");
                 this.tipo.setTipo(TipoDato.BREAK);
                 return this.tipo.getTipo();
             }

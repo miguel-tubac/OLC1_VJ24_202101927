@@ -66,7 +66,7 @@ public class Whiles extends Instruccion {
                 return cond;
             }
             if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO){
-                return new Errores("SEMANTICO", "Expresion invalida para condicion While",this.linea, this.col);
+                return new Errores("SEMANTICO", "Expresion invalida para condicion While: "+cond,this.linea, this.col);
             }
         }
         arbol.agregarSim(newTabla);

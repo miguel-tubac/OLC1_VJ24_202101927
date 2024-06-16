@@ -37,13 +37,13 @@ public class AccesoALaVariable extends Instruccion {
                 case STRING ->
                     this.acceso_A_STRING(valor);
                 default ->
-                    new Errores("Semantico","Operador desconocido en Acceso A La Variable", this.linea, this.col);
+                    new Errores("SEMANTICO","Operador desconocido en Acceso A La Variable", this.linea, this.col);
             };
           
         } 
         
         // Si el símbolo no existe, retornar un error
-        return new Errores("Error Semantico", "La Variable " + id + " no ha sido declarada", this.linea, this.col);
+        return new Errores("SEMANTICO", "La Variable " + id + " no ha sido declarada", this.linea, this.col);
     }
     
     public Object acceso_A_INT(ValorVariable valor){

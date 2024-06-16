@@ -21,7 +21,7 @@ public class Asignacion extends Instruccion{
         //variable exista
         var variable = tabla.buscarSimbolo(this.identificador);
         if (variable == null) {
-            return new Errores("Semantico", "La Variable " + identificador + " no ha sido declarada", this.linea, this.col);
+            return new Errores("SEMANTICO", "La Variable: " + identificador + " no ha sido declarada", this.linea, this.col);
         }
         
         // interpretar el nuevo valor a asignar
@@ -32,7 +32,7 @@ public class Asignacion extends Instruccion{
         
         
         if(variable.getTipo().getTipo() == TipoDato.CONST){
-            return new Errores("Semantico", "La Variable " + identificador + " es de tipo CONST", this.linea, this.col);
+            return new Errores("SEMANTICO", "La Variable: " + identificador + " es de tipo CONST", this.linea, this.col);
         }
         
         

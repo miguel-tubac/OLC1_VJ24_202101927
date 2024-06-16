@@ -40,7 +40,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
             case STRING ->
                 this.datoSTRING(this.mutabilidad, this.id, tabla, expresion);
             default ->
-                new Errores("Error Semantico","Asociacion no declarada", this.linea, this.col);
+                new Errores("SEMANTICO","Asociacion no declarada", this.linea, this.col);
         };
         
     }
@@ -53,12 +53,12 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
             Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
-                return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
+                return new Errores("SEMANTICO","La variable con el id: "+this.id+" ya fue declarada.", this.linea, this.col);
             }
             //this.tipo.setTipo(TipoDato.ENTERO);
             return true;
         }
-        return new Errores("Semantico","La variable con el ID:"+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
+        return new Errores("SEMANTICO","La variable con el id: "+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
     }
     
     
@@ -69,7 +69,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
             Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
-                return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
+                return new Errores("SEMANTICO","La variable con el id: "+this.id+" ya fue declarada.", this.linea, this.col);
             }
             return true;
         }
@@ -84,11 +84,11 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
             Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
-                return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
+                return new Errores("SEMANTICO","La variable con el id: "+this.id+" ya fue declarada.", this.linea, this.col);
             }
             return true;
         }
-        return new Errores("Semantico","La variable con el ID:"+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
+        return new Errores("SEMANTICO","La variable con el id: "+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
     }
     
     
@@ -99,11 +99,11 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
             Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
-                return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
+                return new Errores("SEMANTICO","La variable con el id: "+this.id+" ya fue declarada.", this.linea, this.col);
             }
             return true;
         }
-        return new Errores("Semantico","La variable con el ID:"+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
+        return new Errores("SEMANTICO","La variable con el id: "+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
     }
     
     
@@ -114,11 +114,11 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
             Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
-                return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
+                return new Errores("SEMANTICO","La variable con el id: "+this.id+" ya fue declarada.", this.linea, this.col);
             }
             return true;
         }
-        return new Errores("Semantico","La variable con el ID:"+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
+        return new Errores("SEMANTICO","La variable con el id: "+this.id+" no puede declararse con valores de tipo: "+tipo1, this.linea, this.col);
     }
     
 }

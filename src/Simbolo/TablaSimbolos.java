@@ -46,7 +46,7 @@ public class TablaSimbolos {
     public boolean addSimbolo(Simbolo nuevo) {
         if (nuevo != null && nuevo.getId() != null) {
             if (tablaActual.containsKey(nuevo.getId())) {
-                System.out.println("El simbolo con id " + nuevo.getId() + " ya existe.");
+                //System.out.println("El simbolo con id " + nuevo.getId() + " ya existe.");
                 return false;
                 //throw new IllegalArgumentException("El símbolo con id " + nuevo.getId() + " ya existe.");
                 //return new Error();

@@ -33,7 +33,6 @@ import Instrucciones.ValorVariable;
 import Simbolo.Arbol;
 import Simbolo.Simbolo;
 import Simbolo.TablaSimbolos;
-import Simbolo.Tipo;
 import java.awt.Desktop;
 import java.io.BufferedWriter;
 
@@ -225,6 +224,15 @@ public class FrameInicio extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Reportes");
+        jMenu3.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                jMenu3MenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
         jMenu3.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
             }
@@ -482,7 +490,7 @@ public class FrameInicio extends javax.swing.JFrame {
                     }
                 }
         } else {
-            System.out.println("No se seleccionó ningún archivo.");
+            System.out.println("No se selecciono ningun archivo.");
         }
         
  
@@ -559,7 +567,7 @@ public class FrameInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
-        // none:
+        
         
     }//GEN-LAST:event_jMenu3ActionPerformed
 
@@ -568,12 +576,17 @@ public class FrameInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenu3MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu3MenuSelected
-        // Reportes:
         generarTablaErrores();
         generarTablaSimbolos();
         //Funciones.Expresion.imprecionSimbolos();
         JOptionPane.showMessageDialog(null, "Tablas generadas y guardadas en: src/Tablas(Reportes)/.... " );
+        
     }//GEN-LAST:event_jMenu3MenuSelected
+
+    private void jMenu3MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenu3MenuKeyPressed
+       
+                
+    }//GEN-LAST:event_jMenu3MenuKeyPressed
 
     //Generador de Analizadores, la cual se encutra en el repo
     public static void analizadores(String ruta, String jflexFile, String cupFile){
@@ -614,7 +627,7 @@ public class FrameInicio extends javax.swing.JFrame {
             var resultado = parser.parse();//aqui ya lo traduce
             return resultado.value;
         } catch (Exception e) {//esta son esepciones por si hay errores
-            System.out.println("Error fatal en compilación de entrada.");
+            System.out.println("Error fatal en compilacion de entrada.");
             System.out.println(e);
             //Funciones.Instruccion.agregarError("Error fatal en compilación de entrada.");
             //Funciones.Instruccion.agregarError(e);
@@ -676,7 +689,7 @@ public class FrameInicio extends javax.swing.JFrame {
                 fileWriter.write(textArea.getText());
                 JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente: " + archivoParaGuardar.getAbsolutePath());
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
                 e.printStackTrace();
             }
         }

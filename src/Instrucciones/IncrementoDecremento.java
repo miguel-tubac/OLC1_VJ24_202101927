@@ -20,14 +20,14 @@ public class IncrementoDecremento extends Instruccion {
         //variable exista
         var variable = tabla.buscarSimbolo(this.id);
         if (variable == null) {
-            return new Errores("Semantico", "La Variable " + this.id + " no ha sido declarada", this.linea, this.col);
+            return new Errores("SEMANTICO", "La Variable: " + this.id + " no ha sido declarada", this.linea, this.col);
         }
         
         
         //validamos si es de tipo int o double
         //System.out.println("Tipo: "+ variable.getTipo().getTipo());
         if(variable.getTipo().getTipo() == TipoDato.CONST){
-            return new Errores("Semantico", "La Variable " + this.id + " es de tipo CONST y no puede Incrementar o Decrementar", this.linea, this.col);
+            return new Errores("SEMANTICO", "La Variable: " + this.id + " es de tipo CONST y no puede Incrementar o Decrementar", this.linea, this.col);
         }
         
         ValorVariable valor = (ValorVariable) variable.getValor();
@@ -50,7 +50,7 @@ public class IncrementoDecremento extends Instruccion {
             }
         }
         else{
-            return new Errores("Semantico", "La Variable " + this.id + " no es de tipo INT o DOUBLE.", this.linea, this.col);
+            return new Errores("SEMANTICO", "La Variable: " + this.id + " no es de tipo INT o DOUBLE.", this.linea, this.col);
         }
         return true;
     }

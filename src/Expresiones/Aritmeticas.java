@@ -62,7 +62,7 @@ public class Aritmeticas extends Instruccion {
             case NEGACION ->
                 this.negacion(Unico);
             default ->
-                new Errores("SEMANTICO", "Operador invalido", this.linea, this.col);
+                new Errores("SEMANTICO", "Operador invalido en Aritmeticas", this.linea, this.col);
         };
     }
 
@@ -98,7 +98,7 @@ public class Aritmeticas extends Instruccion {
                     }
                     //Error
                     default -> {
-                        return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
+                        return new Errores("SEMANTICO", "Suma erronea con el tipo.", this.linea, this.col);
                     }
                 }
             }
@@ -127,7 +127,7 @@ public class Aritmeticas extends Instruccion {
                     }
                     //error de tipos
                     default -> {
-                        return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
+                        return new Errores("SEMANTICO", "Suma erronea con el tipo.", this.linea, this.col);
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class Aritmeticas extends Instruccion {
                     }
                     //error de tipos
                     default -> {
-                        return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
+                        return new Errores("SEMANTICO", "Suma erronea con el tipo.", this.linea, this.col);
                     }
                 }
             }
@@ -170,7 +170,7 @@ public class Aritmeticas extends Instruccion {
                     }
                     //error de tipos
                     default -> {
-                        return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
+                        return new Errores("SEMANTICO", "Suma erronea con el tipo.", this.linea, this.col);
                     }
                 }
             }
@@ -204,13 +204,13 @@ public class Aritmeticas extends Instruccion {
                     }
                     //error de tipos
                     default -> {
-                        return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
+                        return new Errores("SEMANTICO", "Suma erronea con el tipo.", this.linea, this.col);
                     }
                 }
             }
             // Error por si el sigono no es suma
             default -> {
-                return new Errores("SEMANTICO", "Suma erronea", this.linea, this.col);
+                return new Errores("SEMANTICO", "Suma erronea general", this.linea, this.col);
 
             }
         }

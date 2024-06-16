@@ -27,9 +27,10 @@ public class DoWhile extends Instruccion {
         if(this.condicion.tipo.getTipo() != TipoDato.BOOLEANO){
             return new Errores("SEMANTICO", "Expresion invalida para condicion While",this.linea, this.col);
         }
-        var newTabla = new TablaSimbolos(tabla);
-        newTabla.setNombre("Do While");
+        
         do{
+            var newTabla = new TablaSimbolos(tabla);
+            newTabla.setNombre("Do While");
             //ejecutar instrucciones
             for (var i : this.instrucciones) {
                 if (i instanceof Break) {
@@ -44,6 +45,7 @@ public class DoWhile extends Instruccion {
                 }
                 var resIns = i.interpretar(arbol, newTabla);
                 //Se agrega a la tabla general ya que se genera un nuevo entorno
+                
                 if (resIns instanceof Errores){
                     arbol.agregarError((Errores) resIns);
                     return resIns;
@@ -70,8 +72,9 @@ public class DoWhile extends Instruccion {
             if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO){
                 return new Errores("SEMANTICO", "Expresion invalida para condicion While: "+cond,this.linea, this.col);
             }
+            arbol.agregarSim(newTabla);
         }while((boolean) cond);
-        arbol.agregarSim(newTabla);
+        
         
         
         return null;

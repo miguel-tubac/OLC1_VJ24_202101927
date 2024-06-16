@@ -27,9 +27,10 @@ public class Whiles extends Instruccion {
         if(this.condicion.tipo.getTipo() != TipoDato.BOOLEANO){
             return new Errores("SEMANTICO", "Expresion invalida para condicion While",this.linea, this.col);
         }
-        var newTabla = new TablaSimbolos(tabla);
-        newTabla.setNombre("While");
+        
         while((boolean) cond){
+            var newTabla = new TablaSimbolos(tabla);
+            newTabla.setNombre("While");
             //ejecutar instrucciones
             for (var i : this.instrucciones) {
                 if (i instanceof Break) {
@@ -43,6 +44,7 @@ public class Whiles extends Instruccion {
                     break;
                 }
                 var resIns = i.interpretar(arbol, newTabla);
+                
                 if (resIns instanceof Errores){
                     arbol.agregarError((Errores) resIns);
                     return resIns;
@@ -68,8 +70,9 @@ public class Whiles extends Instruccion {
             if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO){
                 return new Errores("SEMANTICO", "Expresion invalida para condicion While: "+cond,this.linea, this.col);
             }
+            arbol.agregarSim(newTabla);
         }
-        arbol.agregarSim(newTabla);
+        
         
         return null;
     }

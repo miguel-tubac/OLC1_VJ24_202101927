@@ -29,10 +29,13 @@ public class Match extends Instruccion {
             return new Errores("SEMANTICO", "Expresion match invalida, debe de poseer almenos un caso o el Default.",this.linea, this.col);
         }
         
-        var newTabla = new TablaSimbolos(tabla);
+        /*var newTabla = new TablaSimbolos(tabla);
         newTabla.setNombre("Match");
+        */
         //Aca se evalua sin el dafault, sola las this.instrucciones
         if(this.instrucciones != null && this.condicionDefault == null){
+            var newTabla = new TablaSimbolos(tabla);
+            newTabla.setNombre("Match");
             for (var casos : this.instrucciones){
                 var newcasos = (Casos) casos;
                 //System.out.println("Expresion a comparar: "+ newcasos.getCondicion().interpretar(arbol, newTabla));
@@ -66,6 +69,8 @@ public class Match extends Instruccion {
         }
         //Aca se evalua solo el default
         else if(this.instrucciones == null && this.condicionDefault != null){
+            var newTabla = new TablaSimbolos(tabla);
+        newTabla.setNombre("Match");
             var casofed = this.condicionDefault.interpretar(arbol, newTabla);
             
             if (casofed instanceof Errores){
@@ -76,6 +81,8 @@ public class Match extends Instruccion {
         }
         //Aca se avaluan los dos casos: default y casos
         else{
+            var newTabla = new TablaSimbolos(tabla);
+            newTabla.setNombre("Match");
             boolean sientrocaso = false;
             for (var casos : this.instrucciones){
                 var newcasos = (Casos) casos;

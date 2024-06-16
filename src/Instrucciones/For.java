@@ -43,12 +43,13 @@ public class For extends Instruccion {
             return new Errores("SEMANTICO", "Expresion invalida para condicion del Bucle For",this.linea, this.col);
         }
         arbol.agregarSim(nuevaTabla);
-        var newTabla2 = new TablaSimbolos(nuevaTabla);
-        newTabla2.setNombre("Cuerpo For");
+        
         //System.out.println("Aqui afuera"+ this.condicion.interpretar(arbol, nuevaTabla));
         while ((boolean) this.condicion.interpretar(arbol, nuevaTabla)) {
             //System.out.println("Aqui adentro");
             //nuevo entorno
+            var newTabla2 = new TablaSimbolos(nuevaTabla);
+            newTabla2.setNombre("Cuerpo For");
             
             //ejecutar instrucciones
             for (var i : this.instrucciones) {
@@ -63,10 +64,11 @@ public class For extends Instruccion {
                     break;
                 }
                 var resIns = i.interpretar(arbol, newTabla2);
-                if(resIns instanceof Errores){
+                
+                /*if(resIns instanceof Errores){
                     arbol.agregarError((Errores) resIns);
                     return resIns;
-                }
+                }*/
                 //System.out.println("Valor res: "+resIns);
                 if (resIns == TipoDato.BREAK) {
                     //System.out.println("Break2");
@@ -87,9 +89,9 @@ public class For extends Instruccion {
                 arbol.agregarError((Errores) act);
                 return act;
             }
-            
+            arbol.agregarSim(newTabla2);
         }
-        arbol.agregarSim(newTabla2);
+        
         
         return null;
     }

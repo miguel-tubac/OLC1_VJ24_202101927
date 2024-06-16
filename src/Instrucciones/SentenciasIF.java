@@ -25,14 +25,15 @@ public class SentenciasIF extends Instruccion {
         if (cond instanceof Errores) {
             return cond;
         }
-        var newTabla = new TablaSimbolos(tabla);
-        newTabla.setNombre("Sentenci IF");
+        
         // ver que cond sea booleano
         if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO) {
             return new Errores("SEMANTICO", "Expresion invalida para condicion IF",this.linea, this.col);
         }
          
         if ((boolean) cond) {
+            var newTabla = new TablaSimbolos(tabla);
+            newTabla.setNombre("Sentenci IF");
             var respuesta = this.bloque.interpretar(arbol, newTabla);
             if (respuesta instanceof Errores){
                 arbol.agregarError((Errores) respuesta);
@@ -48,9 +49,12 @@ public class SentenciasIF extends Instruccion {
                 arbol.agregarSim(newTabla);
                 return this.tipo.getTipo();
             }
+            //this.bloque.interpretar(arbol, newTabla);
             arbol.agregarSim(newTabla);
         }
         else if(this.condicionelseif != null){
+            var newTabla = new TablaSimbolos(tabla);
+            newTabla.setNombre("Sentenci IF");
             var respuesta = this.condicionelseif.interpretar(arbol, newTabla);
             if (respuesta instanceof Errores){
                 arbol.agregarError((Errores) respuesta);
@@ -66,6 +70,7 @@ public class SentenciasIF extends Instruccion {
                 arbol.agregarSim(newTabla);
                 return this.tipo.getTipo();
             }
+            //this.condicionelseif.interpretar(arbol, newTabla);
             arbol.agregarSim(newTabla);
         }
         

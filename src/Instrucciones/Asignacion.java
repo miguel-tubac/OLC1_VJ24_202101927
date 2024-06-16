@@ -44,7 +44,9 @@ public class Asignacion extends Instruccion{
             case INT -> {
                 if (this.expresion.tipo.getTipo() == TipoDato.ENTERO) {
                     valor.setValor((int) newValor);
+                    //System.out.println("Aqui22");
                 } else {
+                    //System.out.println("Aqui33");
                     return new Errores("SEMANTICO", "Tipos erroneos en asignacion de variable con el id: " + identificador, this.linea, this.col);
                 }
             }

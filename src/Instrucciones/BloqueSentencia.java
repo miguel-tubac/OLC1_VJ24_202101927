@@ -32,12 +32,12 @@ public class BloqueSentencia extends Instruccion {
             var resultado = instruccion.interpretar(arbol, tabla);
             // Manejo de errores dentro del nuevo entorno
             
-            /*
+            
             if (resultado instanceof Errores) {
                 //errores.add((Errores) resultado);
-                arbol.agregarError((Errores) resultado);
-                //arbol.setErrores(errores);
-            }*/
+                //arbol.agregarError((Errores) resultado);
+                return resultado;
+            }
         }
 
         return null;

@@ -1,0 +1,145 @@
+Terminales = {  ENTERO, TRUE, FALSE, LLAVE_A, LLAVE_C,NUMERODECIMAL,ID,DOSPUNTOS, DOBLEDOSPUNTOS,COMA, PUNTOYCOMA, IGUAL, PARENTESIS_A, PARENTESIS_C, MENOR, MAYOR, 
+                CORCHETE_A, CORCHETE_C, DOBLEIGUAL, DIFERENCIA, MENORIGUAL, MAYORIGUAL, OR, AND, XOR, NOT, MAS, MENOS, POR, DIV, MODULO, POTENCIA, DOBLEMAS, DOBLEMENOS, 
+                IF, ELSE, CADENA, CARACTER, PRINTLN, VAR, CONST, INT, DOUBLE, BOOL, CHAR, STRING, BREAK, CONTINUE, RETURN, DATOSMATCH, MATCH, BAJO, WHILE, FOR, DO;
+            }
+
+
+
+Non Terminals ={<inicio>, <lista_instrucciones>,<expresion>,<instruccion>,<imprimir>, <variables>, <asignacion> ,<tipo>,<mutabilidad>,<casteos>,<incremento>,<sentecia_if>, 
+                <sentencia_bloque>, <sentencia_elseif> ,<sentenciasTransferencia>,<match_funcion>, <match_default>, <casos>,<match_lista>, <match_inicio>,<while_funcion>, 
+                <funcion_for>, <actualizar_for>, <funcion_dowhile >
+            }
+
+
+
+
+Simbolo Inicial = <inicio>
+
+Producciones:
+
+<inicio> -> <lista_instrucciones>
+
+<lista_instrucciones>  ->   <lista_instrucciones> <instruccion>
+                            | <instruccion>
+
+
+<instruccion> ->  <imprimir>      
+                | <variables>              
+                | <asignacion>             
+                | <incremento >            
+                | <sentecia_if >           
+                | <sentenciasTransferencia> 
+                | <match_funcion >         
+                | <while_funcion>          
+                | <funcion_for>            
+                | <funcion_dowhile>               
+                | <error> PUNTOYCOMA
+                | <error> LLAVE_C
+
+
+<variables> ->   <mutabilidad> ID DOSPUNTOS <tipo> PUNTOYCOMA               
+            | <mutabilidad> ID DOSPUNTOS <tipo> IGUAL <expresion> PUNTOYCOMA         
+
+
+<mutabilidad> ->   VAR    
+            | CONST             
+
+
+<tipo> ->  INT    
+        | DOUBLE    
+        | BOOL      
+        | CHAR      
+        | STRING    
+
+
+<casteos> ->  PARENTESIS_A <tipo> PARENTESIS_C <expresion>
+
+
+<asignacion> ->  ID IGUAL <expresion> PUNTOYCOMA        
+
+
+<imprimir> ->  PRINTLN PARENTESIS_A <expresion> PARENTESIS_C PUNTOYCOMA 
+
+
+<incremento> ->  ID DOBLEMAS PUNTOYCOMA     
+            | ID DOBLEMENOS PUNTOYCOMA            
+
+
+<sentecia_if> ->  IF PARENTESIS_A <expresion> PARENTESIS_C  <sentencia_bloque>  <sentencia_elseif>
+
+
+<sentencia_elseif> ->  ELSE <sentencia_bloqu>    
+    |  ELSE sentecia_if:a                       
+    |  €                                        
+
+
+<sentencia_bloque> ->  LLAVE_A <lista_instrucciones> LLAVE_C 
+
+
+<sentenciasTransferencia> ->  BREAK PUNTOYCOMA                
+                        | CONTINUE PUNTOYCOMA                                    
+
+
+<match_funcion> ->  MATCH <expresion> LLAVE_A <match_inicio> <match_default> LLAVE_C 
+
+
+<match_inicio> ->  <match_lista>   
+                |   €                   
+
+
+<match_lista> ->  <match_lista> <casos>                 
+                | <casos>                           
+
+
+<casos> ->  <expresion> DATOSMATCH LLAVE_A <lista_instrucciones> LLAVE_C    
+
+
+<match_default> ->  BAJO DATOSMATCH LLAVE_A <lista_instrucciones> LLAVE_C          
+                |   €                              
+
+
+<while_funcion> ->  WHILE PARENTESIS_A <expresion> PARENTESIS_C LLAVE_A <lista_instrucciones> LLAVE_C   
+
+
+
+<funcion_for> ->  FOR PARENTESIS_A  <asignacion> <expresion> PUNTOYCOMA <actualizar_for> PARENTESIS_C LLAVE_A <lista_instrucciones> LLAVE_C  
+
+
+<actualizar_for> ->  ID IGUAL <expresion> 
+                    | ID DOBLEMAS
+                    | ID DOBLEMENOS
+
+
+
+<funcion_dowhile> ->  DO LLAVE_A <lista_instrucciones> LLAVE_C WHILE PARENTESIS_A <expresion> PARENTESIS_C PUNTOYCOMA 
+
+
+
+<expresion> ->  NUMERODECIMAL                                  
+            | ENTERO                                                 
+            | ID                                                     
+            | CADENA                                                
+            | CARACTER                                             
+            | TRUE                                                 
+            | FALSE                                            
+            | <expresion> MAS <expresion >                               
+            | <expresion> MENOS <expresion>                             
+            | <expresion> POR <expresion>                                
+            | <expresion> DIV <expresion>                                
+            | <expresion> MODULO <expresion>                             
+            | <expresion> POTENCIA <expresion>                           
+            | MENOS <expresion>                                       
+            | <expresion> DOBLEIGUAL <expresion>                         
+            | <expresion> DIFERENCIA <expresion>                         
+            | <expresion> MENOR <expresion>                              
+            | <expresion> MENORIGUAL <expresion >                        
+            | <expresion> MAYOR <expresion>                             
+            | <expresion> MAYORIGUAL <expresion >                        
+            | <expresion> OR <expresion>                                 
+            | <expresion> AND <expresion>                                
+            | <expresion> XOR <expresion>                                
+            | NOT <expresion>                                           
+            | PARENTESIS_A <expresion> PARENTESIS_C                      
+            | <casteos>                                                 
+            | <incremento>                                               
+

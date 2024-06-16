@@ -771,26 +771,22 @@ public class FrameInicio extends javax.swing.JFrame {
         htmlTable.append("</body>");
         htmlTable.append("</html>");
         
-        // Guardar la tabla en un archivo HTML
-        String rutaArchivo = "src/Tablas(Reportes)/TablaErrores.html";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
-            writer.write(htmlTable.toString());
-            
-            System.out.println("Tabla de Errores generada y guardada en: " + rutaArchivo);
-        } catch (IOException e) {
-            System.out.println("Error al guardar la tabla de Errores en el archivo: " + e.getMessage());
-        }
-        
-        // Abrir el archivo HTML de manera automática
-        File archivo = new File(rutaArchivo);
-        if (archivo.exists()) {
-            try {
-                Desktop.getDesktop().browse(archivo.toURI());
-            } catch (IOException e) {
-                System.out.println("Error al abrir el archivo HTML: " + e.getMessage());
+        // Guardar la tabla en un archivo HTML en una ubicación temporal
+        try {
+            File tempFile = File.createTempFile("TablaErrores", ".html");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                writer.write(htmlTable.toString());
+                System.out.println("Tabla de Simbolos generada y guardada en: " + tempFile.getAbsolutePath());
             }
-        } else {
-            System.out.println("El archivo no se encontró.");
+
+            // Abrir el archivo HTML de manera automática
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(tempFile.toURI());
+            } else {
+                System.out.println("El escritorio no soporta la acción de navegación.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error al guardar la tabla de Simbolos en el archivo: " + e.getMessage());
         }
     }
     
@@ -848,28 +844,23 @@ public class FrameInicio extends javax.swing.JFrame {
         htmlTable.append("</body>");
         htmlTable.append("</html>");
 
-        // Guardar la tabla en un archivo HTML
-        String rutaArchivo = "src/Tablas(Reportes)/TablaSimbolos.html";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
-            writer.write(htmlTable.toString());
-            
-            System.out.println("Tabla de Simbolos generada y guardada en: " + rutaArchivo);
+        // Guardar la tabla en un archivo HTML en una ubicación temporal
+        try {
+            File tempFile = File.createTempFile("TablaSimbolos", ".html");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                writer.write(htmlTable.toString());
+                System.out.println("Tabla de Simbolos generada y guardada en: " + tempFile.getAbsolutePath());
+            }
+
+            // Abrir el archivo HTML de manera automática
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(tempFile.toURI());
+            } else {
+                System.out.println("El escritorio no soporta la acción de navegación.");
+            }
         } catch (IOException e) {
             System.out.println("Error al guardar la tabla de Simbolos en el archivo: " + e.getMessage());
         }
-        
-        // Abrir el archivo HTML de manera automática
-        File archivo = new File(rutaArchivo);
-        if (archivo.exists()) {
-            try {
-                Desktop.getDesktop().browse(archivo.toURI());
-            } catch (IOException e) {
-                System.out.println("Error al abrir el archivo HTML: " + e.getMessage());
-            }
-        } else {
-            System.out.println("El archivo no se encontró.");
-        }
-
     }
     
     /**

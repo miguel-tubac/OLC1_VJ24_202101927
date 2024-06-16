@@ -23,11 +23,12 @@ public class Casos extends Instruccion {
             return cond;
         }
         
-        var newTabla = new TablaSimbolos(tabla);
-        LinkedList<Errores> errores = new LinkedList<>();
+        //var newTabla = new TablaSimbolos(tabla);
+        //LinkedList<Errores> errores = new LinkedList<>();
 
         for (var instruccion : this.instrucciones) {
-            var resultado = instruccion.interpretar(arbol, newTabla);
+            var resultado = instruccion.interpretar(arbol, tabla);
+            /*
             if (instruccion instanceof Continue) {//aqui ay que comparar dos cosas el for tambien
                // System.out.println("Aqui1");
                 continue; // Saltar a la siguiente iteración si es una instrucción Continue
@@ -37,12 +38,11 @@ public class Casos extends Instruccion {
             if (resultado  instanceof Continue){
                 //System.out.println("Aqui2");
                 continue;
-            }
+            }*/
             
             // Manejo de errores dentro del nuevo entorno
             if (resultado instanceof Errores) {
-                errores.add((Errores) resultado);
-                arbol.setErrores(errores);
+                return resultado;
             }
         }
         

@@ -1,20 +1,21 @@
 // ------------  Paquete e importaciones ------------
 package Analizadores; 
 
+import InterfasGrafica.FrameInicio;
 import java_cup.runtime.*;
 import java.util.LinkedList;
 import Excepciones.Errores;
 
 %%	
 %{
-    public LinkedList<Errores> listaErrores = new LinkedList<>();
+    //public LinkedList<Errores> listaErrores = new LinkedList<>();
     String cadena = "";
 %}
 
 %init{
     yyline = 1;
     yycolumn = 1;
-    listaErrores = new LinkedList<>();
+    //listaErrores = new LinkedList<>();
 %init}
 
 
@@ -142,6 +143,6 @@ comentario_multiple = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
 //------> Errores Léxicos 
 <YYINITIAL> .   {  
-                    listaErrores.add(new Errores("LEXICO","El caracter "+yytext()+" NO pertenece al lenguaje", yyline, yycolumn));
+                    InterfasGrafica.FrameInicio.lista.add(new Errores("LEXICO","El caracter "+yytext()+" NO pertenece al lenguaje", yyline, yycolumn));
                     System.out.println("Error Lexico: " + yytext() + " | Fila:" + yyline + " | Columna: " + yycolumn); 
                 }

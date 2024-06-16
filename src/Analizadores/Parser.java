@@ -558,18 +558,18 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
-    public LinkedList<Errores> listaErrores = new LinkedList<>();
+    //public LinkedList<Errores> listaErrores = new LinkedList<>();
 
     public void syntax_error(Symbol s)
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
-            listaErrores.add(new Errores("SINTACTICO RECUPERABLE","No se esperaba el componente "+s.value,s.left,s.right));
+            InterfasGrafica.FrameInicio.lista.add(new Errores("SINTACTICO RECUPERABLE","No se esperaba el componente "+s.value,s.left,s.right));
     }
 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Sin recuperacion." );
-            listaErrores.add(new Errores("SINTACTICO NO RECUPERABLE", "No se esperaba el componente "+s.value, s.left, s.right));
+            InterfasGrafica.FrameInicio.lista.add(new Errores("SINTACTICO NO RECUPERABLE", "No se esperaba el componente "+s.value, s.left, s.right));
     }
 
 

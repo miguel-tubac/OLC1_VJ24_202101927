@@ -50,7 +50,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
         var tipo1 = this.operando.tipo.getTipo();
         if (tipo1 == TipoDato.ENTERO){
             ValorVariable valor = new ValorVariable(this.tipo, ((Number) expresion).intValue());//((Number) op1).doubleValue()
-            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
                 return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -66,7 +66,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
         var tipo1 = this.operando.tipo.getTipo();
         if (tipo1 == TipoDato.DECIMAL){
             ValorVariable valor = new ValorVariable(this.tipo, ((Number) expresion).doubleValue());//((Number) op1).doubleValue()
-            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
                 return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -81,7 +81,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
         var tipo1 = this.operando.tipo.getTipo();
         if (tipo1 == TipoDato.BOOLEANO){
             ValorVariable valor = new ValorVariable(this.tipo, (Boolean) expresion);
-            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
                 return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -96,7 +96,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
         var tipo1 = this.operando.tipo.getTipo();
         if (tipo1 == TipoDato.CARACTER){
             ValorVariable valor = new ValorVariable(this.tipo,  (expresion.toString()).charAt(0));//(op2.toString()).charAt(0)
-            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
                 return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -111,7 +111,7 @@ public class DeclaracionVariablesConExpresion extends Instruccion {
         var tipo1 = this.operando.tipo.getTipo();
         if (tipo1 == TipoDato.CADENA){
             ValorVariable valor = new ValorVariable(this.tipo, (String) expresion);
-            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+            Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
             boolean resultado = tabla.addSimbolo(nuevoSimbolo);
             if (resultado == false){
                 return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);

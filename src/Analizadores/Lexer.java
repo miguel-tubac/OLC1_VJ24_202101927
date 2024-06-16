@@ -5,6 +5,7 @@
 // ------------  Paquete e importaciones ------------
 package Analizadores; 
 
+import InterfasGrafica.FrameInicio;
 import java_cup.runtime.*;
 import java.util.LinkedList;
 import Excepciones.Errores;
@@ -415,7 +416,7 @@ public class Lexer implements java_cup.runtime.Scanner {
   private boolean zzEOFDone;
 
   /* user code: */
-    public LinkedList<Errores> listaErrores = new LinkedList<>();
+    //public LinkedList<Errores> listaErrores = new LinkedList<>();
     String cadena = "";
 
 
@@ -427,7 +428,7 @@ public class Lexer implements java_cup.runtime.Scanner {
   public Lexer(java.io.Reader in) {
       yyline = 1;
     yycolumn = 1;
-    listaErrores = new LinkedList<>();
+    //listaErrores = new LinkedList<>();
     this.zzReader = in;
   }
 
@@ -848,7 +849,7 @@ public class Lexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { listaErrores.add(new Errores("LEXICO","El caracter "+yytext()+" NO pertenece al lenguaje", yyline, yycolumn));
+            { InterfasGrafica.FrameInicio.lista.add(new Errores("LEXICO","El caracter "+yytext()+" NO pertenece al lenguaje", yyline, yycolumn));
                     System.out.println("Error Lexico: " + yytext() + " | Fila:" + yyline + " | Columna: " + yycolumn);
             }
           // fall through

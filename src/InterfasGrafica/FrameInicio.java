@@ -28,8 +28,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Abstracto.Instruccion;
 import Excepciones.Errores;
+import Instrucciones.OperadoresVariables;
+import Instrucciones.ValorVariable;
 import Simbolo.Arbol;
+import Simbolo.Simbolo;
 import Simbolo.TablaSimbolos;
+import Simbolo.Tipo;
+import java.awt.Desktop;
+import java.io.BufferedWriter;
 
 
 
@@ -37,7 +43,8 @@ public class FrameInicio extends javax.swing.JFrame {
 
     
     public String nombreArchivo = "";
-    static LinkedList<Errores> lista = new LinkedList<>();
+    public static LinkedList<Errores> lista = new LinkedList<>();
+    static LinkedList<DatosTablaSimbolo> arregloSim = new LinkedList<>();
     
     public FrameInicio() {
         initComponents();
@@ -301,15 +308,16 @@ public class FrameInicio extends javax.swing.JFrame {
             //Comente la llamada a la funcion ya que solo se debe de ejecutar una ves, para que genere los archivos .java en 
             //el paquete analizador
             
-            //    analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
+             //   analizadores("src/Analizadores/", "Lexer.jflex", "Parser.cup");//------------------------------------------------------------- Aqui 1 
             
             //Se ingresa el texto a la consola sin comillas
             //String consola2 = Funciones.Instruccion.consola.replace("\"", "");
             
-             //     /* //------------------------------------------------------------------------------- Aqui 2
+            //      /* //------------------------------------------------------------------------------- Aqui 2
             try{
                 //System.out.println(texto);
                 lista.clear();
+                arregloSim.clear();
                 var resultado2 = analizar(texto); 
                 
                 //System.out.println(resultado2);
@@ -328,15 +336,111 @@ public class FrameInicio extends javax.swing.JFrame {
                     if (res instanceof Errores) {
                         lista.add((Errores) res);//Aca se agregan los errores semanticos
                     }
+                    
                 }
+                lista.addAll(ast.getErrores());
                 
                 // Aca recorremos la lista de errores
                 for (var i : lista) {
                     ast.Print(i.toString());
-                    System.out.println(i);
+                    //System.out.println(i.toString());
                 }
                 //System.out.println(ast.getConsola());
                 jTextArea1.setText(ast.getConsola());
+                
+                
+                
+                
+                //*********************************************************Aca se genera la lista para la tabla de simbolos***********************
+                //DatosTablaSimbolo
+                //arregloSim
+                //TablaSimbolos tab = ast.getTablaGlobal();
+                //System.out.println("Entorno: "+ tabla.getNombre());
+                tabla.getTablaActual().forEach((clave, valor) ->{
+                    //System.out.println("Clave1: "+clave);
+                    if(valor instanceof Simbolo){
+                        Simbolo antes = (Simbolo) valor;
+                        //System.out.println("TipoVar: "+ antes.getTipo().getTipo() );//acas esta el var o const
+                        //System.out.println("Valor: "+antes.getValor());
+                        if( antes.getValor() instanceof ValorVariable){
+                            ValorVariable ress = (ValorVariable) antes.getValor();
+                            //System.out.println("Valor: "+ress.getTipo());
+                            if (ress.getTipo() == OperadoresVariables.INT){
+                                //System.out.println("Valor: "+ress.getValor());
+                                //public DatosTablaSimbolo(String id, String tipovar, String tipo, String entorno, Object valor, int linea, int column) 
+                                DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), tabla.getNombre(), ress.getValor() ,antes.getLinea(),antes.getColumn());
+                                arregloSim.add(nuevo);
+                            }
+                            else if (ress.getTipo() == OperadoresVariables.DOUBLE){
+                                DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), tabla.getNombre(), ress.getValorDouble() ,antes.getLinea(),antes.getColumn());
+                                arregloSim.add(nuevo);
+                            }
+                            else if (ress.getTipo() == OperadoresVariables.BOOL){
+                                DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), tabla.getNombre(), ress.isValorBoolean() ,antes.getLinea(),antes.getColumn());
+                                arregloSim.add(nuevo);
+                            }
+                            else if (ress.getTipo() == OperadoresVariables.CHAR){
+                                DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), tabla.getNombre(), ress.getValorChar() ,antes.getLinea(),antes.getColumn());
+                                arregloSim.add(nuevo);
+                            }
+                            else if (ress.getTipo() == OperadoresVariables.STRING){
+                                DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), tabla.getNombre(), ress.getValorString() ,antes.getLinea(),antes.getColumn());
+                                arregloSim.add(nuevo);
+                            }
+                            else{
+                                System.out.println("Validar tipo fuera en el Frame Inicio, en la creacion de la tabla de simbolos para la linkedist");
+                            }
+                        }
+                           
+                    }
+                });
+                //System.out.println("Fin primero");
+                //Aca recorro los enternos que se crean
+                for(var a : ast.getSimb()){
+                    //System.out.println("Entornodentro: "+ a.getNombre());
+                    
+                    a.getTablaActual().forEach((clave, valor) ->{
+                        //System.out.println("Clave2: "+clave);
+                        if(valor instanceof Simbolo){
+                            Simbolo antes = (Simbolo) valor;
+                            //System.out.println("Valor: "+antes.getValor());
+                            if( antes.getValor() instanceof ValorVariable){
+                                ValorVariable ress = (ValorVariable) antes.getValor();
+                                //System.out.println("Valor: "+ress.getTipo());
+                                if (ress.getTipo() == OperadoresVariables.INT){
+                                    //System.out.println("Valor: "+ress.getValor());
+                                    //public DatosTablaSimbolo(String id, String tipovar, String tipo, String entorno, Object valor, int linea, int column) 
+                                    DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), a.getNombre(), ress.getValor() ,antes.getLinea(),antes.getColumn());
+                                    arregloSim.add(nuevo);
+                                }
+                                else if (ress.getTipo() == OperadoresVariables.DOUBLE){
+                                    DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), a.getNombre(), ress.getValorDouble() ,antes.getLinea(),antes.getColumn());
+                                    arregloSim.add(nuevo);
+                                }
+                                else if (ress.getTipo() == OperadoresVariables.BOOL){
+                                    DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), a.getNombre(), ress.isValorBoolean() ,antes.getLinea(),antes.getColumn());
+                                    arregloSim.add(nuevo);
+                                }
+                                else if (ress.getTipo() == OperadoresVariables.CHAR){
+                                    DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), a.getNombre(), ress.getValorChar() ,antes.getLinea(),antes.getColumn());
+                                    arregloSim.add(nuevo);
+                                }
+                                else if (ress.getTipo() == OperadoresVariables.STRING){
+                                    DatosTablaSimbolo nuevo = new DatosTablaSimbolo(clave, antes.getTipo().getTipo().toString(), ress.getTipo().toString(), a.getNombre(), ress.getValorString() ,antes.getLinea(),antes.getColumn());
+                                    arregloSim.add(nuevo);
+                                }
+                                else{
+                                    System.out.println("Validar tipo fuera en el Frame Inicio, en la creacion de la tabla de simbolos para la linkedist");
+                                }
+                            }
+                        }
+                        
+                    });
+                }
+                //*********************************************************Fin Tabla de simbolos**************************************************
+                
+                
+                
                 
             } catch(Exception e){
                 System.out.println("Algo salio mal");
@@ -465,8 +569,8 @@ public class FrameInicio extends javax.swing.JFrame {
 
     private void jMenu3MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu3MenuSelected
         // Reportes:
-        //Funciones.Expresion.imprecionLexemas();
-        //Funciones.Expresion.imprecionErrores();
+        generarTablaErrores();
+        generarTablaSimbolos();
         //Funciones.Expresion.imprecionSimbolos();
         JOptionPane.showMessageDialog(null, "Tablas generadas y guardadas en: src/Tablas(Reportes)/.... " );
     }//GEN-LAST:event_jMenu3MenuSelected
@@ -494,9 +598,19 @@ public class FrameInicio extends javax.swing.JFrame {
     public static Object analizar (String entrada){
         try {
             Analizadores.Lexer lexer = new Analizadores.Lexer(new StringReader(entrada));//este es el analizaro lexico
-             lista.addAll(lexer.listaErrores);
+             //lista.addAll(lexer.listaErrores);
             Analizadores.Parser parser = new Analizadores.Parser(lexer);//lugo lo pasa al parser
+            //lista.addAll(parser.listaErrores);
+            /*
+            for(var b : lexer.listaErrores){
+                System.out.println("Aqui si ay: "+b.getTipo());
+            }
+            for(var a : parser.listaErrores){
+                System.out.println("Aqui si ay1111: "+a.getTipo());
+            }
+            lista.addAll(lexer.listaErrores);
             lista.addAll(parser.listaErrores);
+            */
             var resultado = parser.parse();//aqui ya lo traduce
             return resultado.value;
         } catch (Exception e) {//esta son esepciones por si hay errores
@@ -597,7 +711,153 @@ public class FrameInicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Guardado cancelado por el usuario.", "Guardado Cancelado", JOptionPane.WARNING_MESSAGE);
         }
     }
+    
+    
+    public static void generarTablaErrores(){
+        int contadorErrores = 0;
+        //Errores errorGeneral;
+        // Construir la tabla en formato HTML
+        StringBuilder htmlTable = new StringBuilder();
+        htmlTable.append("<html>");
+        htmlTable.append("<head>");
+        htmlTable.append("<title>Tabla de Errores</title>");
+        htmlTable.append("</head>");
+        htmlTable.append("<body>");
+        htmlTable.append("<h1>Tabla de Errores</h1>");
+        htmlTable.append("<table border=\"1\">");
+        htmlTable.append("<tr>");
+        htmlTable.append("<th>Número</th>");
+        htmlTable.append("<th>Tipo</th>");
+        htmlTable.append("<th>Descripcion</th>");
+        htmlTable.append("<th>Línea</th>");
+        htmlTable.append("<th>Columna</th>");
+        htmlTable.append("</tr>");
+        
+        // Aca recorremos la lista de errores
+        for (var i : lista) {
+            //Se incrementa el contador
+            contadorErrores++;
+            // Acceder a los valores del token
+            int numero = contadorErrores;
+            String tipo = i.getTipo();
+            String descripcion = i.getDesc();
+            int linea = i.getLinea();
+            int columna = i.getColumna();
+            
+            // Agregar una fila a la tabla con los valores del token
+            htmlTable.append("<tr>");
+            htmlTable.append("<td>").append(numero).append("</td>");
+            htmlTable.append("<td>").append(tipo).append("</td>");
+            htmlTable.append("<td>").append(descripcion).append("</td>");
+            htmlTable.append("<td>").append(linea).append("</td>");
+            htmlTable.append("<td>").append(columna).append("</td>");
+            htmlTable.append("</tr>");
+        }
+        // Cerrar la tabla y el documento HTML
+        htmlTable.append("</table>");
+        htmlTable.append("</body>");
+        htmlTable.append("</html>");
+        
+        // Guardar la tabla en un archivo HTML
+        String rutaArchivo = "src/Tablas(Reportes)/TablaErrores.html";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+            writer.write(htmlTable.toString());
+            
+            System.out.println("Tabla de Errores generada y guardada en: " + rutaArchivo);
+        } catch (IOException e) {
+            System.out.println("Error al guardar la tabla de Errores en el archivo: " + e.getMessage());
+        }
+        
+        // Abrir el archivo HTML de manera automática
+        File archivo = new File(rutaArchivo);
+        if (archivo.exists()) {
+            try {
+                Desktop.getDesktop().browse(archivo.toURI());
+            } catch (IOException e) {
+                System.out.println("Error al abrir el archivo HTML: " + e.getMessage());
+            }
+        } else {
+            System.out.println("El archivo no se encontró.");
+        }
+    }
+    
+    public static void generarTablaSimbolos(){
+        int contadorSim = 0;
+        // Construir la tabla en formato HTML
+        StringBuilder htmlTable = new StringBuilder();
+        htmlTable.append("<html>");
+        htmlTable.append("<head>");
+        htmlTable.append("<title>Tabla de Simbolos</title>");
+        htmlTable.append("</head>");
+        htmlTable.append("<body>");
+        htmlTable.append("<h1>Tabla de Simbolos</h1>");
+        htmlTable.append("<table border=\"1\">");
+        htmlTable.append("<tr>");
+        htmlTable.append("<th>Número</th>");
+        htmlTable.append("<th>ID</th>");
+        htmlTable.append("<th>Tipo</th>");
+        htmlTable.append("<th>Tipo</th>");
+        htmlTable.append("<th>Entorno</th>");
+        htmlTable.append("<th>Valor</th>");
+        htmlTable.append("<th>Línea</th>");
+        htmlTable.append("<th>Columna</th>");
+        htmlTable.append("</tr>");
+        
+        //Recorremos la lista con los elementos de la tabla
+        for (var i : arregloSim) {
+            //Se incrementa el contador
+            contadorSim++;
+            // Acceder a los valores del token
+            int numero = contadorSim;
+            String id = i.getId();
+            String tipoVar = i.getTipovar();
+            String tipo = i.getTipo();
+            String entorno = i.getEntorno();
+            Object valor = i.getValor();
+            int linea = i.getLinea();
+            int columna = i.getColumn();
+            
+            // Agregar una fila a la tabla con los valores del token
+            htmlTable.append("<tr>");
+            htmlTable.append("<td>").append(numero).append("</td>");
+            htmlTable.append("<td>").append(id).append("</td>");
+            htmlTable.append("<td>").append(tipoVar).append("</td>");
+            htmlTable.append("<td>").append(tipo).append("</td>");
+            htmlTable.append("<td>").append(entorno).append("</td>");
+            htmlTable.append("<td>").append(valor).append("</td>");
+            htmlTable.append("<td>").append(linea).append("</td>");
+            htmlTable.append("<td>").append(columna).append("</td>");
+            htmlTable.append("</tr>");
+        }
+        
+        // Cerrar la tabla y el documento HTML
+        htmlTable.append("</table>");
+        htmlTable.append("</body>");
+        htmlTable.append("</html>");
 
+        // Guardar la tabla en un archivo HTML
+        String rutaArchivo = "src/Tablas(Reportes)/TablaSimbolos.html";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+            writer.write(htmlTable.toString());
+            
+            System.out.println("Tabla de Simbolos generada y guardada en: " + rutaArchivo);
+        } catch (IOException e) {
+            System.out.println("Error al guardar la tabla de Simbolos en el archivo: " + e.getMessage());
+        }
+        
+        // Abrir el archivo HTML de manera automática
+        File archivo = new File(rutaArchivo);
+        if (archivo.exists()) {
+            try {
+                Desktop.getDesktop().browse(archivo.toURI());
+            } catch (IOException e) {
+                System.out.println("Error al abrir el archivo HTML: " + e.getMessage());
+            }
+        } else {
+            System.out.println("El archivo no se encontró.");
+        }
+
+    }
     
     /**
      * @param args the command line arguments

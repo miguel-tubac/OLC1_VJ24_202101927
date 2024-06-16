@@ -26,6 +26,7 @@ public class SentenciasIF extends Instruccion {
             return cond;
         }
         var newTabla = new TablaSimbolos(tabla);
+        newTabla.setNombre("Sentenci IF");
         // ver que cond sea booleano
         if (this.condicion.tipo.getTipo() != TipoDato.BOOLEANO) {
             return new Errores("SEMANTICO", "Expresion invalida para condicion IF",this.linea, this.col);
@@ -34,30 +35,38 @@ public class SentenciasIF extends Instruccion {
         if ((boolean) cond) {
             var respuesta = this.bloque.interpretar(arbol, newTabla);
             if (respuesta instanceof Errores){
+                arbol.agregarError((Errores) respuesta);
                 return respuesta;
             }
             if(respuesta == TipoDato.BREAK){
                 this.tipo.setTipo(TipoDato.BREAK);
+                arbol.agregarSim(newTabla);
                 return this.tipo.getTipo();
             }
             if(respuesta == TipoDato.CONTINUE){
                 this.tipo.setTipo(TipoDato.CONTINUE);
+                arbol.agregarSim(newTabla);
                 return this.tipo.getTipo();
             }
+            arbol.agregarSim(newTabla);
         }
         else if(this.condicionelseif != null){
             var respuesta = this.condicionelseif.interpretar(arbol, newTabla);
             if (respuesta instanceof Errores){
+                arbol.agregarError((Errores) respuesta);
                 return respuesta;
             }
             if(respuesta == TipoDato.BREAK){
                 this.tipo.setTipo(TipoDato.BREAK);
+                arbol.agregarSim(newTabla);
                 return this.tipo.getTipo();
             }
             if(respuesta == TipoDato.CONTINUE){
                 this.tipo.setTipo(TipoDato.CONTINUE);
+                arbol.agregarSim(newTabla);
                 return this.tipo.getTipo();
             }
+            arbol.agregarSim(newTabla);
         }
         
         return null;

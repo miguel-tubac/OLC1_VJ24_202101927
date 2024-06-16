@@ -30,6 +30,7 @@ public class Match extends Instruccion {
         }
         
         var newTabla = new TablaSimbolos(tabla);
+        newTabla.setNombre("Match");
         //Aca se evalua sin el dafault, sola las this.instrucciones
         if(this.instrucciones != null && this.condicionDefault == null){
             for (var casos : this.instrucciones){
@@ -38,12 +39,14 @@ public class Match extends Instruccion {
                 //System.out.println("Tipo Expresion a comparar: "+ newcasos.getCondicion().tipo.getTipo());
                 var compa = newcasos.getCondicion().interpretar(arbol, newTabla);
                 if (compa instanceof Errores){
+                    arbol.agregarError((Errores) compa);
                      return compa;
                 }
                 if(this.condicion.tipo.getTipo() == TipoDato.CADENA && newcasos.getCondicion().tipo.getTipo() == TipoDato.CADENA || 
                         this.condicion.tipo.getTipo() == TipoDato.CARACTER && newcasos.getCondicion().tipo.getTipo() == TipoDato.CARACTER ){
                     if( compa.toString().equals(cond.toString())){
                         casos.interpretar(arbol, newTabla);
+                        arbol.agregarSim(newTabla);
                         //System.out.println("Aquissssss");
                         break;
                     } 
@@ -54,6 +57,7 @@ public class Match extends Instruccion {
                     //Aca se interpreta la condicion que se cumple dentro del match
                     if(this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo() && compa == cond){
                         casos.interpretar(arbol, newTabla);
+                        arbol.agregarSim(newTabla);
                         //System.out.println("Aquissssss");
                         break;
                     } 
@@ -65,8 +69,10 @@ public class Match extends Instruccion {
             var casofed = this.condicionDefault.interpretar(arbol, newTabla);
             
             if (casofed instanceof Errores){
+                arbol.agregarError((Errores) casofed);
                 return casofed;
             }
+            arbol.agregarSim(newTabla);
         }
         //Aca se avaluan los dos casos: default y casos
         else{
@@ -75,6 +81,7 @@ public class Match extends Instruccion {
                 var newcasos = (Casos) casos;
                 var compa = newcasos.getCondicion().interpretar(arbol, newTabla);
                 if (compa instanceof Errores){
+                    arbol.agregarError((Errores) compa);
                      return compa;
                 }
                 if(this.condicion.tipo.getTipo() == TipoDato.CADENA && newcasos.getCondicion().tipo.getTipo() == TipoDato.CADENA || 
@@ -82,6 +89,7 @@ public class Match extends Instruccion {
                     if( compa.toString().equals(cond.toString())){
                         casos.interpretar(arbol, newTabla);
                         sientrocaso = true;
+                        arbol.agregarSim(newTabla);
                         //System.out.println("Aquissssss");
                         break;
                     } 
@@ -93,6 +101,7 @@ public class Match extends Instruccion {
                     if(this.condicion.tipo.getTipo() == newcasos.getCondicion().tipo.getTipo() && compa == cond){
                         casos.interpretar(arbol, newTabla);
                         sientrocaso = true;
+                        arbol.agregarSim(newTabla);
                         //System.out.println("Aquissssss");
                         break;
                     } 
@@ -103,10 +112,13 @@ public class Match extends Instruccion {
                 var casofed = this.condicionDefault.interpretar(arbol, newTabla);
             
                 if (casofed instanceof Errores){
+                    arbol.agregarError((Errores) casofed);
                     return casofed;
                 }
+                arbol.agregarSim(newTabla);
             }
         }
+        //arbol.agregarSim(newTabla);
         
         return null;
     }

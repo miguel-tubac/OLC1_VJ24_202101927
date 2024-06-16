@@ -41,7 +41,7 @@ public class DeclaracionVariables extends Instruccion{
     
     public Object datoINT(TipoDato mutabilidad, String id, TablaSimbolos tabla){
         ValorVariable valor = new ValorVariable(this.tipo, 0);
-        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
         boolean resultado = tabla.addSimbolo(nuevoSimbolo);
         if (resultado == false){
             return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -53,7 +53,7 @@ public class DeclaracionVariables extends Instruccion{
     
     public Object datoDOUBLE(TipoDato mutabilidad, String id, TablaSimbolos tabla){
         ValorVariable valor = new ValorVariable(this.tipo, 0.0);
-        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
         boolean resultado = tabla.addSimbolo(nuevoSimbolo);
         if (resultado == false){
             return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -64,7 +64,7 @@ public class DeclaracionVariables extends Instruccion{
     
     public Object datoBOOL(TipoDato mutabilidad, String id, TablaSimbolos tabla){
         ValorVariable valor = new ValorVariable(this.tipo, true);
-        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
         boolean resultado = tabla.addSimbolo(nuevoSimbolo);
         if (resultado == false){
             return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -75,7 +75,7 @@ public class DeclaracionVariables extends Instruccion{
     
     public Object datoCHAR(TipoDato mutabilidad, String id, TablaSimbolos tabla){
         ValorVariable valor = new ValorVariable(this.tipo, '0');
-        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
         boolean resultado = tabla.addSimbolo(nuevoSimbolo);
         if (resultado == false){
             return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);
@@ -85,7 +85,7 @@ public class DeclaracionVariables extends Instruccion{
     
     public Object datoSTRING(TipoDato mutabilidad, String id, TablaSimbolos tabla){
         ValorVariable valor = new ValorVariable(this.tipo, "");
-        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor);
+        Simbolo nuevoSimbolo = new Simbolo(new Tipo(mutabilidad), this.id, valor, this.linea, this.col);
         boolean resultado = tabla.addSimbolo(nuevoSimbolo);
         if (resultado == false){
             return new Errores("Semantico","La variable con el ID:"+this.id+" Ya fue declarada.", this.linea, this.col);

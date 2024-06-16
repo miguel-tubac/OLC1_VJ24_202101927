@@ -10,12 +10,14 @@ public class Arbol {
     private String consola;
     private TablaSimbolos tablaGlobal;
     private LinkedList<Errores> errores;
+    private LinkedList<TablaSimbolos> simbolos;
 
     public Arbol(LinkedList<Instruccion> instrucciones) {
         this.instrucciones = instrucciones;
         this.consola = "";
         this.tablaGlobal = new TablaSimbolos();
         this.errores = new LinkedList<>();
+        this.simbolos = new LinkedList<>();
     }
 
     public LinkedList<Instruccion> getInstrucciones() {
@@ -45,6 +47,10 @@ public class Arbol {
     public LinkedList<Errores> getErrores() {
         return errores;
     }
+    
+    public LinkedList<TablaSimbolos> getSimb() {
+        return simbolos;
+    }
 
     public void setErrores(LinkedList<Errores> errores) {
         this.errores = errores;
@@ -61,6 +67,14 @@ public class Arbol {
             //this.errores.add(new Errores("SEMANTICO", "El símbolo con id " + simbolo.getId() + " ya existe en la tabla global.", 0, 0));
             return false;
         }
+    }
+    
+    public void agregarError(Errores error) {
+        this.errores.add(error);
+    }
+    
+    public void agregarSim(TablaSimbolos simbolo) {
+        this.simbolos.add(simbolo);
     }
     
 }

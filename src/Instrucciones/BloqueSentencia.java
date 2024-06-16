@@ -30,20 +30,13 @@ public class BloqueSentencia extends Instruccion {
                 return this.tipo.getTipo();
             }
             var resultado = instruccion.interpretar(arbol, tabla);
-            /*
-            if (instruccion instanceof Continue) {//aqui ay que comparar dos cosas el for tambien
-                //System.out.println("Aqui1");
-                continue; // Saltar a la siguiente iteración si es una instrucción Continue
-            }
-            //System.out.println("Afuera");
-            */
-            
-            
             // Manejo de errores dentro del nuevo entorno
+            
             /*
             if (resultado instanceof Errores) {
-                errores.add((Errores) resultado);
-                arbol.setErrores(errores);
+                //errores.add((Errores) resultado);
+                arbol.agregarError((Errores) resultado);
+                //arbol.setErrores(errores);
             }*/
         }
 
